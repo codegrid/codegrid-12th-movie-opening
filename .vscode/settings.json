@@ -1,8 +1,8 @@
 {
-	"editor.tabSize": 2,
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"editor.codeActionsOnSave": {
-		"source.organizeImports": false
-	},
-	"typescript.enablePromptUseWorkspaceTsdk": true
+  "editor.tabSize": 2,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "never"
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
