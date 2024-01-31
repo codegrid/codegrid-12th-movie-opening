@@ -1,5 +1,5 @@
 import { Composition } from "remotion"
-import { Scene, myCompSchema } from "./Scene"
+import { MyComposition } from "./Composition"
 
 // Welcome to the Remotion Three Starter Kit!
 // Two compositions have been created, showing how to use
@@ -19,19 +19,7 @@ import { Scene, myCompSchema } from "./Scene"
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition
-        id="Scene"
-        component={Scene}
-        durationInFrames={300}
-        fps={30}
-        width={1280}
-        height={720}
-        schema={myCompSchema}
-        defaultProps={{
-          deviceType: "phone",
-          phoneColor: "rgba(110, 152, 191, 0.00)" as const
-        }}
-      />
+      <Composition id="MyComp" component={MyComposition} durationInFrames={150} fps={30} width={1920} height={1080} />
     </>
   )
 }
