@@ -1,20 +1,12 @@
-import { staticFile } from "remotion"
-import { getVideoMetadata, VideoMetadata } from "@remotion/media-utils"
-import { ThreeCanvas, useVideoTexture } from "@remotion/three"
-import React, { useEffect, useRef, useState } from "react"
-import { AbsoluteFill, useVideoConfig, Video } from "remotion"
-import { Phone } from "./Phone"
+import { interpolate, spring } from "remotion"
+import { useCurrentFrame } from "remotion"
+import { ThreeCanvas } from "@remotion/three"
+import React from "react"
+import { useVideoConfig } from "remotion"
 import { z } from "zod"
 import { zColor } from "@remotion/zod-types"
-
-const container: React.CSSProperties = {
-  backgroundColor: "white"
-}
-
-const videoStyle: React.CSSProperties = {
-  position: "absolute",
-  opacity: 0
-}
+import { Tetrimino, Tetriminos } from "./Tetrimino"
+import { Bounds } from "@react-three/drei"
 
 export const myCompSchema = z.object({
   phoneColor: zColor(),
@@ -23,39 +15,46 @@ export const myCompSchema = z.object({
 
 type MyCompSchemaType = z.infer<typeof myCompSchema>
 
-export const Scene: React.FC<
-  {
-    baseScale: number
-  } & MyCompSchemaType
-> = ({ baseScale, phoneColor, deviceType }) => {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const { width, height } = useVideoConfig()
-  const [videoData, setVideoData] = useState<VideoMetadata | null>(null)
+export const Scene: React.FC<MyCompSchemaType> = () => {
+  const frame = useCurrentFrame()
 
-  const videoSrc = deviceType === "phone" ? staticFile("phone.mp4") : staticFile("tablet.mp4")
+  const { width, height, fps } = useVideoConfig()
 
-  useEffect(() => {
-    getVideoMetadata(videoSrc)
-      .then((data) => setVideoData(data))
-      .catch((err) => console.log(err))
-  }, [videoSrc])
+  const entranceAnimation = spring({
+    frame,
+    fps,
+    config: {
+      damping: 200,
+      mass: 300
+    }
+  })
 
-  const texture = useVideoTexture(videoRef)
   return (
-    <AbsoluteFill style={container}>
-      <Video ref={videoRef} src={videoSrc} style={videoStyle} />
-      {videoData ? (
-        <ThreeCanvas linear width={width} height={height}>
-          <ambientLight intensity={1.5} color={0xffffff} />
-          <pointLight position={[10, 10, 0]} />
-          <Phone
-            phoneColor={phoneColor}
-            baseScale={baseScale}
-            videoTexture={texture}
-            aspectRatio={videoData.aspectRatio}
-          />
-        </ThreeCanvas>
-      ) : null}
-    </AbsoluteFill>
+    <ThreeCanvas
+      shadows
+      width={width}
+      height={height}
+      camera={{
+        position: [0, 0, 10],
+        fov: 45
+      }}
+    >
+      <ambientLight />
+      <spotLight castShadow angle={0.25} penumbra={0.5} position={[10, 10, 5]} />
+
+      <Bounds fit clip>
+        {Object.keys(Tetriminos).map((type, index) => {
+          const tetrimino = Tetriminos[type as keyof typeof Tetriminos]
+          return (
+            <Tetrimino
+              key={index}
+              type={type as keyof typeof Tetriminos}
+              position={[index * 2 - 10, interpolate(entranceAnimation, [0, 1], [10, -10]), 0]}
+              blocks={tetrimino.blocks}
+            />
+          )
+        })}
+      </Bounds>
+    </ThreeCanvas>
   )
 }

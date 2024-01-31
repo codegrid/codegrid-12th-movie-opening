@@ -29,8 +29,7 @@ export const RemotionRoot: React.FC = () => {
         schema={myCompSchema}
         defaultProps={{
           deviceType: "phone",
-          phoneColor: "rgba(110, 152, 191, 0.00)" as const,
-          baseScale: 1
+          phoneColor: "rgba(110, 152, 191, 0.00)" as const
         }}
       />
     </>

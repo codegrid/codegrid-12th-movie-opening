@@ -1,0 +1,104 @@
+import { Block, Cube } from "./Cube"
+
+interface TetriminoDefinition {
+  blocks: Block[]
+  color: string
+}
+
+export type TetriminoType = keyof typeof Tetriminos
+
+export const Tetriminos: { [key: string]: TetriminoDefinition } = {
+  OrangeRicky: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: 1, y: 0, z: 0 },
+      { x: -1, y: 0, z: 0 },
+      { x: 1, y: 1, z: 0 }
+    ],
+    color: "#ff9562"
+  },
+  BlueRicky: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: 1, y: 0, z: 0 },
+      { x: -1, y: 0, z: 0 },
+      { x: -1, y: 1, z: 0 }
+    ],
+    color: "#5eaeff"
+  },
+  ClevelandZ: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: 1, y: 0, z: 0 },
+      { x: 0, y: -1, z: 0 },
+      { x: -1, y: -1, z: 0 }
+    ],
+    color: "#de5f75"
+  },
+  RhodeIslandZ: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: -1, y: 0, z: 0 },
+      { x: 0, y: -1, z: 0 },
+      { x: 1, y: -1, z: 0 }
+    ],
+    color: "#79dd53"
+  },
+  Hero: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: -1, y: 0, z: 0 },
+      { x: 1, y: 0, z: 0 },
+      { x: 2, y: 0, z: 0 }
+    ],
+    color: "#3fdcd5"
+  },
+  Teewee: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: -1, y: 0, z: 0 },
+      { x: 1, y: 0, z: 0 },
+      { x: 0, y: 1, z: 0 }
+    ],
+    color: "#af60ff"
+  },
+  Smashboy: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: 1, y: 0, z: 0 },
+      { x: 0, y: -1, z: 0 },
+      { x: 1, y: -1, z: 0 }
+    ],
+    color: "#ffff4d"
+  }
+}
+
+export const CODEGRID: { [key: string]: TetriminoDefinition } = {
+  C: {
+    blocks: [
+      { x: 0, y: 0, z: 0 },
+      { x: 1, y: 0, z: 0 }
+    ],
+    color: "#ff9562"
+  }
+}
+
+interface TetriminoProps {
+  type: TetriminoType
+  position: [number, number, number]
+  blocks: Block[]
+  scale?: number
+  rotation?: [number, number, number]
+}
+
+export const Tetrimino: React.FC<TetriminoProps> = ({ type, position, blocks, scale = 1, rotation = [0, 0, 0] }) => {
+  const tetriminoColor = Tetriminos[type].color
+
+  return (
+    <group position={position} scale={[scale, scale, scale]} rotation={rotation}>
+      {blocks.map((block, index) => (
+        <Cube key={index} position={block} color={tetriminoColor} />
+      ))}
+    </group>
+  )
+}

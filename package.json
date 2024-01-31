@@ -12,6 +12,7 @@
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
+    "@react-three/drei": "^9.97.0",
     "@react-three/fiber": "^8.8.10",
     "@remotion/cli": "4.0.102",
     "@remotion/media-utils": "4.0.102",
