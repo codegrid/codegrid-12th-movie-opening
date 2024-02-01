@@ -2,6 +2,7 @@ import { Block, Cube } from "./Cube"
 
 interface TetriminoDefinition {
   blocks: Block[]
+  width: number
   color: string
 }
 
@@ -15,6 +16,7 @@ export const Tetriminos: { [key: string]: TetriminoDefinition } = {
       { x: -1, y: 0, z: 0 },
       { x: 1, y: 1, z: 0 }
     ],
+    width: 3,
     color: "#ff9562"
   },
   BlueRicky: {
@@ -24,6 +26,7 @@ export const Tetriminos: { [key: string]: TetriminoDefinition } = {
       { x: -1, y: 0, z: 0 },
       { x: -1, y: 1, z: 0 }
     ],
+    width: 3,
     color: "#5eaeff"
   },
   ClevelandZ: {
@@ -33,6 +36,7 @@ export const Tetriminos: { [key: string]: TetriminoDefinition } = {
       { x: 0, y: -1, z: 0 },
       { x: -1, y: -1, z: 0 }
     ],
+    width: 3,
     color: "#de5f75"
   },
   RhodeIslandZ: {
@@ -42,6 +46,8 @@ export const Tetriminos: { [key: string]: TetriminoDefinition } = {
       { x: 0, y: -1, z: 0 },
       { x: 1, y: -1, z: 0 }
     ],
+    width: 3,
+
     color: "#79dd53"
   },
   Hero: {
@@ -51,6 +57,7 @@ export const Tetriminos: { [key: string]: TetriminoDefinition } = {
       { x: 1, y: 0, z: 0 },
       { x: 2, y: 0, z: 0 }
     ],
+    width: 4,
     color: "#3fdcd5"
   },
   Teewee: {
@@ -60,6 +67,7 @@ export const Tetriminos: { [key: string]: TetriminoDefinition } = {
       { x: 1, y: 0, z: 0 },
       { x: 0, y: 1, z: 0 }
     ],
+    width: 3,
     color: "#af60ff"
   },
   Smashboy: {
@@ -69,17 +77,8 @@ export const Tetriminos: { [key: string]: TetriminoDefinition } = {
       { x: 0, y: -1, z: 0 },
       { x: 1, y: -1, z: 0 }
     ],
+    width: 2,
     color: "#ffff4d"
-  }
-}
-
-export const CODEGRID: { [key: string]: TetriminoDefinition } = {
-  C: {
-    blocks: [
-      { x: 0, y: 0, z: 0 },
-      { x: 1, y: 0, z: 0 }
-    ],
-    color: "#ff9562"
   }
 }
 
