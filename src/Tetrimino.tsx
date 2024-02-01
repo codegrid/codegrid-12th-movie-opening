@@ -97,8 +97,24 @@ export const Tetrimino: React.FC<TetriminoProps> = ({ type, position, blocks, sc
   return (
     <group position={position} scale={[scale, scale, scale]} rotation={rotation}>
       {blocks.map((block, index) => (
-        <Cube key={index} position={block} color={tetriminoColor} />
+        <Cube key={index} position={[block.x, block.y, block.z]} color={tetriminoColor} />
       ))}
     </group>
+  )
+}
+
+interface TetriminoInnerProps {
+  type: TetriminoType
+}
+
+export const TetriminoInner: React.FC<TetriminoInnerProps> = ({ type }) => {
+  const { color, blocks } = Tetriminos[type]
+
+  return (
+    <>
+      {blocks.map((block, index) => (
+        <Cube key={index} position={[block.x, block.y, block.z]} color={color} />
+      ))}
+    </>
   )
 }

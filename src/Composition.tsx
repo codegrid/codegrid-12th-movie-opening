@@ -1,7 +1,8 @@
 import { ThreeCanvas } from "@remotion/three"
 import { AbsoluteFill, interpolate, Sequence, useVideoConfig } from "remotion"
 import { Background } from "./Background"
-import { MoveMesh } from "./MoveMesh"
+import { MoveGroup } from "./MoveGroup"
+import { TetriminoInner, Tetriminos } from "./Tetrimino"
 
 export const MyComposition: React.FC = () => {
   const { width, height } = useVideoConfig()
@@ -12,12 +13,11 @@ export const MyComposition: React.FC = () => {
       <ThreeCanvas width={width} height={height}>
         <ambientLight />
         <spotLight castShadow angle={0.25} penumbra={0.5} position={[10, 10, 5]} />
-        {[...new Array(4)].map((_, i) => (
+        {Object.keys(Tetriminos).map((tetriType, i) => (
           <Sequence layout="none" from={i * 10}>
-            <MoveMesh x={interpolate(i, [0, 3], [-3, 3])}>
-              <boxGeometry args={[1, 1, 1]} />
-              <meshStandardMaterial color="orange" />
-            </MoveMesh>
+            <MoveGroup x={interpolate(i, [0, 3], [-3, 3])}>
+              <TetriminoInner type={tetriType} />
+            </MoveGroup>
           </Sequence>
         ))}
       </ThreeCanvas>
