@@ -3,7 +3,7 @@
 import { Rect } from "@remotion/shapes"
 import { useCallback, useEffect, useState } from "react"
 import { AbsoluteFill, random, useVideoConfig } from "remotion"
-import { Background } from "./Background"
+import { Background } from "../Background"
 
 const COLORS = ["#3fdcd5", "#af60ff", "#ffff4d", "#ff3d3d", "#ff9f1a", "#00ff00", "#00ffff"]
 
