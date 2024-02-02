@@ -1,5 +1,5 @@
 import { Composition } from "remotion"
-import { TetrisGame2d } from "./TetrisGame2d"
+import { AutoTetris2d } from "./AutoTetris2d"
 
 // Welcome to the Remotion Three Starter Kit!
 // Two compositions have been created, showing how to use
@@ -19,7 +19,7 @@ import { TetrisGame2d } from "./TetrisGame2d"
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="MyComp" component={TetrisGame2d} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="MyComp" component={AutoTetris2d} durationInFrames={150} fps={30} width={1920} height={1080} />
     </>
   )
 }
