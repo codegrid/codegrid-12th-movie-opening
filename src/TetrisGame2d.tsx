@@ -64,7 +64,7 @@ const BLOCK_SIZE = 40
 // テトリミノの1辺の最長
 const TET_SIZE = 4
 
-export const MyComposition2d: React.FC = () => {
+export const TetrisGame2d: React.FC = () => {
   const { width, height, fps } = useVideoConfig()
 
   const SCREEN_GRID_WIDTH = width / BLOCK_SIZE
