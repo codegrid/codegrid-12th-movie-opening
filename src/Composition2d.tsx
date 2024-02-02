@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable array-callback-return */
 import { Rect } from "@remotion/shapes"
 import { useEffect, useState } from "react"
@@ -74,15 +75,15 @@ export const MyComposition2d: React.FC = () => {
   const tetroTypesIndex = Math.floor(random("tetrimino") * 7)
 
   // テトロミノを取得する
-  const tetroMino = TETROMINOS[tetroTypesIndex]
+  const [tetroMino, setTetroMino] = useState(() => TETROMINOS[tetroTypesIndex])
 
   // テトリミノの移動距離
   const [tetroMinoDistance, setTetroMinoDistance] = useState({ x: 0, y: 0 })
 
-  const canMove = (moveX: number, moveY: number) => {
+  const canMove = (moveX: number, moveY: number, newTet = tetroMino) => {
     for (let y = 0; y < TET_SIZE; y++) {
       for (let x = 0; x < TET_SIZE; x++) {
-        if (tetroMino[y][x]) {
+        if (newTet[y][x]) {
           // 現在のテトリミノの位置（tetroMinoDistanceX + x）に移動分を加える（＝移動後の座標）
           const nextX = tetroMinoDistance.x + x + moveX
           const nextY = tetroMinoDistance.y + y + moveY
@@ -103,8 +104,46 @@ export const MyComposition2d: React.FC = () => {
     return true
   }
 
+  // 右回転
+  const createRightRotateTet = () => {
+    // 回転後の新しいテトリミノ用配列
+    const newTet: number[][] = []
+    for (let y = 0; y < TET_SIZE; y++) {
+      newTet[y] = []
+      for (let x = 0; x < TET_SIZE; x++) {
+        newTet[y][x] = tetroMino[TET_SIZE - 1 - x][y]
+      }
+    }
+    return newTet
+  }
+
+  // 左回転
+  const createLeftRotateTet = () => {
+    // 回転後の新しいテトリミノ用配列
+    const newTet: number[][] = []
+    for (let y = 0; y < TET_SIZE; y++) {
+      newTet[y] = []
+      for (let x = 0; x < TET_SIZE; x++) {
+        newTet[y][x] = tetroMino[x][TET_SIZE - 1 - y]
+      }
+    }
+    return newTet
+  }
+
   const onKeydown = (e: KeyboardEvent) => {
     switch (e.code) {
+      case e.altKey && "ArrowRight":
+        const newRTet = createRightRotateTet()
+        if (canMove(0, 0, newRTet)) {
+          setTetroMino(newRTet)
+        }
+        break
+      case e.altKey && "ArrowLeft":
+        const newLTet = createLeftRotateTet()
+        if (canMove(0, 0, newLTet)) {
+          setTetroMino(newLTet)
+        }
+        break
       case "ArrowLeft":
         if (canMove(-1, 0)) setTetroMinoDistance((prev) => ({ ...prev, x: prev.x - 1 }))
         break
