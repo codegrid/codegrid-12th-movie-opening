@@ -70,7 +70,10 @@ export const MyComposition2d: React.FC = () => {
   const SCREEN_GRID_WIDTH = width / BLOCK_SIZE
   const SCREEN_GRID_HEIGHT = height / BLOCK_SIZE
 
-  const SCREEN_GRID = Array.from({ length: SCREEN_GRID_HEIGHT }, () => Array(SCREEN_GRID_WIDTH).fill(0))
+  // ScreenGrid[y][x]: 画面上のブロックの状態（0: 空、1: ブロックあり）
+  const [screenGrid, setScreenGrid] = useState(
+    [...Array(SCREEN_GRID_HEIGHT)].map(() => Array(SCREEN_GRID_WIDTH).fill(0))
+  )
 
   // テトロミノを取得する
   const [tetroTypesIndex, setTetroTypesIndex] = useState(Math.floor(random(null) * 7))
@@ -94,7 +97,7 @@ export const MyComposition2d: React.FC = () => {
               nextX < 0 ||
               nextY >= SCREEN_GRID_HEIGHT ||
               nextX >= SCREEN_GRID_WIDTH ||
-              SCREEN_GRID[nextY]?.[nextX]
+              screenGrid[nextY]?.[nextX]
             ) {
               return false
             }
@@ -103,7 +106,7 @@ export const MyComposition2d: React.FC = () => {
       }
       return true
     },
-    [tetroMino, tetroMinoDistance.x, tetroMinoDistance.y, SCREEN_GRID, SCREEN_GRID_HEIGHT, SCREEN_GRID_WIDTH]
+    [screenGrid, tetroMino, tetroMinoDistance.x, tetroMinoDistance.y, SCREEN_GRID_HEIGHT, SCREEN_GRID_WIDTH]
   )
 
   // 右回転
@@ -133,14 +136,16 @@ export const MyComposition2d: React.FC = () => {
   }
 
   const fixTet = useCallback(() => {
+    const grid = [...screenGrid]
     for (let y = 0; y < TET_SIZE; y++) {
       for (let x = 0; x < TET_SIZE; x++) {
         if (tetroMino[y][x]) {
-          SCREEN_GRID[tetroMinoDistance.y + y][tetroMinoDistance.x + x] = 1
+          grid[tetroMinoDistance.y + y][tetroMinoDistance.x + x] = tetroMino[y][x]
         }
       }
     }
-  }, [SCREEN_GRID, tetroMino, tetroMinoDistance.x, tetroMinoDistance.y])
+    setScreenGrid(grid)
+  }, [tetroMino, tetroMinoDistance.x, tetroMinoDistance.y, setScreenGrid, screenGrid])
 
   const createTetPosition = useCallback(() => {
     setTetroMinoDistance({ x: SCREEN_GRID_WIDTH / 2 - TET_SIZE / 2, y: 0 })
@@ -211,18 +216,18 @@ export const MyComposition2d: React.FC = () => {
     <AbsoluteFill>
       <>
         <Background />
-        {/** 画面本体で動かせなくなったブロックを描画 */}
-        {[...new Array(SCREEN_GRID_HEIGHT)].flatMap((_, i) => {
-          ;[...new Array(SCREEN_GRID_WIDTH)].map((_, j) => {
-            if (SCREEN_GRID[i][j] > 0) {
+        {/** すでに落ちたブロックを描画 */}
+        {[...screenGrid].flatMap((row, y) => {
+          return row.map((block, x) => {
+            if (block > 0) {
               return (
                 <AbsoluteFill
                   style={{
-                    left: j * BLOCK_SIZE,
-                    top: i * BLOCK_SIZE
+                    left: x * BLOCK_SIZE,
+                    top: y * BLOCK_SIZE
                   }}
                 >
-                  <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={COLORS[SCREEN_GRID[i][j] - 1]} />
+                  <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={COLORS[block - 1]} />
                 </AbsoluteFill>
               )
             }
