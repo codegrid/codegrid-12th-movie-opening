@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable array-callback-return */
 import { Rect } from "@remotion/shapes"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { AbsoluteFill, random, useVideoConfig } from "remotion"
 import { Background } from "./Background"
 
@@ -65,44 +65,46 @@ const BLOCK_SIZE = 40
 const TET_SIZE = 4
 
 export const MyComposition2d: React.FC = () => {
-  const { width, height } = useVideoConfig()
+  const { width, height, fps } = useVideoConfig()
 
   const SCREEN_GRID_WIDTH = width / BLOCK_SIZE
   const SCREEN_GRID_HEIGHT = height / BLOCK_SIZE
 
   const SCREEN_GRID = Array.from({ length: SCREEN_GRID_HEIGHT }, () => Array(SCREEN_GRID_WIDTH).fill(0))
 
-  const tetroTypesIndex = Math.floor(random("tetrimino") * 7)
-
   // テトロミノを取得する
+  const [tetroTypesIndex, setTetroTypesIndex] = useState(Math.floor(random(null) * 7))
   const [tetroMino, setTetroMino] = useState(() => TETROMINOS[tetroTypesIndex])
 
   // テトリミノの移動距離
-  const [tetroMinoDistance, setTetroMinoDistance] = useState({ x: 0, y: 0 })
+  const [tetroMinoDistance, setTetroMinoDistance] = useState({ x: SCREEN_GRID_WIDTH / 2 - TET_SIZE / 2, y: 0 })
 
-  const canMove = (moveX: number, moveY: number, newTet = tetroMino) => {
-    for (let y = 0; y < TET_SIZE; y++) {
-      for (let x = 0; x < TET_SIZE; x++) {
-        if (newTet[y][x]) {
-          // 現在のテトリミノの位置（tetroMinoDistanceX + x）に移動分を加える（＝移動後の座標）
-          const nextX = tetroMinoDistance.x + x + moveX
-          const nextY = tetroMinoDistance.y + y + moveY
+  const canMove = useCallback(
+    (moveX: number, moveY: number, newTet = tetroMino) => {
+      for (let y = 0; y < TET_SIZE; y++) {
+        for (let x = 0; x < TET_SIZE; x++) {
+          if (newTet[y][x]) {
+            // 現在のテトリミノの位置（tetroMinoDistanceX + x）に移動分を加える（＝移動後の座標）
+            const nextX = tetroMinoDistance.x + x + moveX
+            const nextY = tetroMinoDistance.y + y + moveY
 
-          // 移動先にブロックがあるか判定
-          if (
-            nextY < 0 ||
-            nextX < 0 ||
-            nextY >= SCREEN_GRID_HEIGHT ||
-            nextX >= SCREEN_GRID_WIDTH ||
-            SCREEN_GRID[nextY][nextX]
-          ) {
-            return false
+            // 移動先にブロックがあるか判定
+            if (
+              nextY < 0 ||
+              nextX < 0 ||
+              nextY >= SCREEN_GRID_HEIGHT ||
+              nextX >= SCREEN_GRID_WIDTH ||
+              SCREEN_GRID[nextY]?.[nextX]
+            ) {
+              return false
+            }
           }
         }
       }
-    }
-    return true
-  }
+      return true
+    },
+    [tetroMino, tetroMinoDistance.x, tetroMinoDistance.y, SCREEN_GRID, SCREEN_GRID_HEIGHT, SCREEN_GRID_WIDTH]
+  )
 
   // 右回転
   const createRightRotateTet = () => {
@@ -129,6 +131,40 @@ export const MyComposition2d: React.FC = () => {
     }
     return newTet
   }
+
+  const fixTet = useCallback(() => {
+    for (let y = 0; y < TET_SIZE; y++) {
+      for (let x = 0; x < TET_SIZE; x++) {
+        if (tetroMino[y][x]) {
+          SCREEN_GRID[tetroMinoDistance.y + y][tetroMinoDistance.x + x] = 1
+        }
+      }
+    }
+  }, [SCREEN_GRID, tetroMino, tetroMinoDistance.x, tetroMinoDistance.y])
+
+  const createTetPosition = useCallback(() => {
+    setTetroMinoDistance({ x: SCREEN_GRID_WIDTH / 2 - TET_SIZE / 2, y: 0 })
+  }, [SCREEN_GRID_WIDTH])
+
+  // 落下処理
+  const dropTet = useCallback(() => {
+    if (canMove(0, 1)) {
+      setTetroMinoDistance((prev) => ({ ...prev, y: prev.y + 1 }))
+    } else {
+      fixTet()
+      setTetroTypesIndex(Math.floor(random(null) * 7))
+      setTetroMino(TETROMINOS[tetroTypesIndex])
+      createTetPosition()
+    }
+  }, [canMove, fixTet, createTetPosition, tetroTypesIndex])
+
+  // 5秒間に1回落下処理を実行
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dropTet()
+    }, 5000 / fps)
+    return () => clearInterval(interval)
+  }, [dropTet, fps])
 
   const onKeydown = (e: KeyboardEvent) => {
     switch (e.code) {
@@ -159,6 +195,9 @@ export const MyComposition2d: React.FC = () => {
       default:
         break
     }
+
+    e.preventDefault()
+    e.stopPropagation()
   }
 
   useEffect(() => {
@@ -200,7 +239,7 @@ export const MyComposition2d: React.FC = () => {
                     top: (i + tetroMinoDistance.y) * BLOCK_SIZE
                   }}
                 >
-                  <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={COLORS[tetroTypesIndex]} />
+                  <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={COLORS[tetroMino[i][j] - 1]} />
                 </AbsoluteFill>
               )
             }
