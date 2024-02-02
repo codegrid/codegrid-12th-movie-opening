@@ -12,15 +12,18 @@
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
+    "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^9.97.0",
     "@react-three/fiber": "^8.8.10",
     "@remotion/cli": "4.0.102",
     "@remotion/media-utils": "4.0.102",
+    "@remotion/shapes": "^4.0.104",
     "@remotion/three": "4.0.102",
     "@remotion/zod-types": "4.0.102",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "remotion": "4.0.102",
+    "remotion-animated": "^2.0.0",
     "three": "^0.145.0",
     "zod": "^3.21.4"
   },
