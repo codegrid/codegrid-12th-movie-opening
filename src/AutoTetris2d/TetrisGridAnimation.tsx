@@ -621,6 +621,8 @@ const SCENARIO = [
     {
       type: "I",
       startX: -1,
+      startY: -4,
+      height: 1,
       actions: ["rotate(90deg)"]
     }
   ]
@@ -661,27 +663,42 @@ export const TetrisGridAnimation: React.FC = () => {
       {SCENARIO.map((scene, i) => {
         return scene.map((one, j) => {
           const tet = TETROMINOS[one.type as keyof typeof TETROMINOS]
-          return tet.map((row, y) => {
-            return row.map((cell, x) => {
-              // @ts-ignore
-              const color = cell === 0 ? "white" : COLORS[one.type as keyof typeof COLORS]
-              return (
-                <AbsoluteFill
-                  key={`${one.type}-${x}-${y}-${i}-${j}`}
-                  style={{
-                    left: (x + one.startX) * BLOCK_SIZE + i * BLOCK_SIZE * TET_SIZE,
-                    top:
-                      interpolate(frame, [0, 30], [0, height - BLOCK_SIZE * row.length], {
-                        extrapolateRight: "clamp"
-                      }) +
-                      y * BLOCK_SIZE
-                  }}
-                >
-                  <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={color} />
-                </AbsoluteFill>
-              )
-            })
-          })
+          return (
+            <AbsoluteFill
+              style={{
+                width: BLOCK_SIZE,
+                height: BLOCK_SIZE * tet.length,
+                top: interpolate(
+                  frame,
+                  [0, 30],
+                  [one.startY * BLOCK_SIZE - BLOCK_SIZE, height - BLOCK_SIZE * one.height + one.startY * BLOCK_SIZE],
+                  {
+                    extrapolateRight: "clamp"
+                  }
+                ),
+                transform: one.actions.join(" "),
+                transformOrigin: "left bottom"
+              }}
+            >
+              {tet.map((row, y) => {
+                return row.map((cell, x) => {
+                  // @ts-ignore
+                  const color = cell === 0 ? "none" : COLORS[one.type as keyof typeof COLORS]
+                  return (
+                    <AbsoluteFill
+                      key={`${one.type}-${x}-${y}-${i}-${j}`}
+                      style={{
+                        left: (x + one.startX) * BLOCK_SIZE + i * BLOCK_SIZE * TET_SIZE,
+                        top: y * BLOCK_SIZE
+                      }}
+                    >
+                      <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={color} />
+                    </AbsoluteFill>
+                  )
+                })
+              })}
+            </AbsoluteFill>
+          )
         })
       })}
     </AbsoluteFill>
