@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Rect } from "@remotion/shapes"
 import { AbsoluteFill, useVideoConfig } from "remotion"
 import { BLOCK_SIZE } from "./const"
+
+const TET_SIZE = 4
 
 const COLORS = {
   I: "#9ADCFF",
@@ -609,7 +612,7 @@ const LAST_GRID_STATE = [
     "J",
     "I"
   ]
-] as const
+]
 
 export const LastTetrisGrid: React.FC = () => {
   const { height } = useVideoConfig()
@@ -620,8 +623,31 @@ export const LastTetrisGrid: React.FC = () => {
         backgroundColor: "white"
       }}
     >
+      {/** 全種類のテトリミノを横並びで描画 */}
+      {Object.keys(TETROMINOS).map((key, i) => {
+        const tet = TETROMINOS[key as keyof typeof TETROMINOS]
+        return tet.map((row, y) => {
+          return row.map((cell, x) => {
+            // @ts-ignore
+            const color = cell === 0 ? "white" : COLORS[key as keyof typeof COLORS]
+            return (
+              <AbsoluteFill
+                key={`${key}-${x}-${y}`}
+                style={{
+                  left: x * BLOCK_SIZE + i * BLOCK_SIZE * TET_SIZE,
+                  top: y * BLOCK_SIZE
+                }}
+              >
+                <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={color} />
+              </AbsoluteFill>
+            )
+          })
+        })
+      })}
+      {/** 最終状態 */}
       {LAST_GRID_STATE.map((row, y) => {
         return row.map((cell, x) => {
+          // @ts-ignore
           const color = COLORS[cell]
           return (
             <AbsoluteFill
