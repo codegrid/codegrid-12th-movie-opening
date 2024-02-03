@@ -1,5 +1,5 @@
 import { Composition } from "remotion"
-import { LastTetrisGrid } from "./AutoTetris2d/LastTetrisGrid"
+import { TetrisGridAnimation } from "./AutoTetris2d/TetrisGridAnimation"
 
 // Welcome to the Remotion Three Starter Kit!
 // Two compositions have been created, showing how to use
@@ -19,7 +19,14 @@ import { LastTetrisGrid } from "./AutoTetris2d/LastTetrisGrid"
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="MyComp" component={LastTetrisGrid} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition
+        id="MyComp"
+        component={TetrisGridAnimation}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
     </>
   )
 }
