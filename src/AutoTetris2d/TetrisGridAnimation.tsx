@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Rect } from "@remotion/shapes"
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion"
+import { AbsoluteFill, interpolate, random, useCurrentFrame, useVideoConfig } from "remotion"
 import { BLOCK_SIZE } from "./const"
 
 const TET_SIZE = 4
@@ -12,607 +12,108 @@ const COLORS = {
   S: "#C9F4AA",
   Z: "#FF8AAE",
   J: "#00A9FF",
-  L: "#FFCF96",
-  0: "white"
+  L: "#FFCF96"
 }
 
 const TETROMINOS = {
-  I: [
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
-    [0, 3, 0, 0],
-    [0, 3, 0, 0]
-  ],
-  O: [
-    [0, 0, 0, 0],
-    [0, 7, 7, 0],
-    [0, 7, 7, 0],
-    [0, 0, 0, 0]
-  ],
-  T: [
-    [0, 0, 0, 0],
-    [6, 6, 6, 0],
-    [0, 6, 0, 0],
-    [0, 0, 0, 0]
-  ],
-  S: [
-    [0, 0, 0, 0],
-    [0, 0, 2, 2],
-    [0, 2, 2, 0],
-    [0, 0, 0, 0]
-  ],
-  Z: [
-    [0, 0, 0, 0],
-    [1, 1, 0, 0],
-    [0, 1, 1, 0],
-    [0, 0, 0, 0]
-  ],
-  J: [
-    [0, 4, 0, 0],
-    [0, 4, 0, 0],
-    [0, 4, 4, 0],
-    [0, 0, 0, 0]
-  ],
-  L: [
-    [0, 0, 5, 0],
-    [0, 0, 5, 0],
-    [0, 5, 5, 0],
-    [0, 0, 0, 0]
-  ]
+  I: {
+    default: [[3], [3], [3], [3]],
+    rotateR: [[3, 3, 3, 3]],
+    rotateL: [[3, 3, 3, 3]]
+  },
+  O: {
+    default: [
+      [7, 7],
+      [7, 7]
+    ],
+    rotateR: [
+      [7, 7],
+      [7, 7]
+    ],
+    rotateL: [
+      [7, 7],
+      [7, 7]
+    ]
+  },
+  T: {
+    default: [
+      [0, 6, 0],
+      [6, 6, 6]
+    ],
+    rotateR: [
+      [6, 0],
+      [6, 6],
+      [6, 0]
+    ],
+    rotateL: [
+      [0, 6],
+      [6, 6],
+      [0, 6]
+    ]
+  },
+  S: {
+    default: [
+      [0, 2, 2],
+      [2, 2, 0]
+    ],
+    rotateR: [
+      [2, 0],
+      [2, 2],
+      [0, 2]
+    ],
+    rotateL: [
+      [0, 2],
+      [2, 2],
+      [2, 0]
+    ]
+  },
+  Z: {
+    default: [
+      [1, 1, 0],
+      [0, 1, 1]
+    ],
+    rotateR: [
+      [0, 1],
+      [1, 1],
+      [1, 0]
+    ],
+    rotateL: [
+      [1, 0],
+      [1, 1],
+      [0, 1]
+    ]
+  },
+  L: {
+    default: [
+      [1, 0],
+      [1, 0],
+      [1, 1]
+    ],
+    rotateR: [
+      [1, 1, 1],
+      [1, 0, 0]
+    ],
+    rotateL: [
+      [1, 1, 0],
+      [0, 1, 0]
+    ]
+  },
+  J: {
+    default: [
+      [0, 5],
+      [0, 5],
+      [5, 5]
+    ],
+    rotateR: [
+      [5, 0, 0],
+      [5, 5, 5]
+    ],
+    rotateL: [
+      [5, 5, 5],
+      [0, 0, 5]
+    ]
+  }
 }
-
-const LAST_GRID_STATE = [
-  [
-    0,
-    0,
-    0,
-    0,
-    "T",
-    "S",
-    "S",
-    "I",
-    "I",
-    "I",
-    "I",
-    "S",
-    "L",
-    "L",
-    "J",
-    "J",
-    "J",
-    "L",
-    "I",
-    "J",
-    "J",
-    "J",
-    0,
-    0,
-    "T",
-    "S",
-    "S",
-    "T",
-    "T",
-    "T",
-    "L",
-    0,
-    0,
-    0,
-    0,
-    "O",
-    "O",
-    0,
-    "L",
-    "L",
-    "L",
-    "I",
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-  ],
-  [
-    0,
-    0,
-    0,
-    "T",
-    "T",
-    "T",
-    0,
-    0,
-    0,
-    0,
-    "T",
-    "S",
-    "S",
-    "L",
-    "J",
-    "S",
-    "S",
-    "L",
-    "I",
-    0,
-    "L",
-    "L",
-    "L",
-    "T",
-    "T",
-    "T",
-    0,
-    0,
-    0,
-    0,
-    "L",
-    "L",
-    "S",
-    "Z",
-    "Z",
-    "O",
-    "O",
-    "S",
-    "S",
-    "Z",
-    0,
-    "I",
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-  ],
-  [
-    0,
-    "J",
-    "L",
-    "L",
-    "L",
-    "I",
-    0,
-    "O",
-    "O",
-    "T",
-    "T",
-    "T",
-    "S",
-    "L",
-    "S",
-    "S",
-    "L",
-    "L",
-    "I",
-    0,
-    "L",
-    "T",
-    "I",
-    "I",
-    "I",
-    "I",
-    0,
-    "I",
-    "I",
-    "I",
-    "I",
-    "T",
-    "S",
-    "S",
-    "Z",
-    "Z",
-    "S",
-    "S",
-    "Z",
-    "Z",
-    0,
-    "I",
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-  ],
-  [
-    0,
-    "J",
-    "O",
-    "O",
-    "L",
-    "I",
-    0,
-    "O",
-    "O",
-    "S",
-    "S",
-    "Z",
-    "Z",
-    "T",
-    "T",
-    "T",
-    "J",
-    "J",
-    "J",
-    0,
-    "T",
-    "T",
-    "T",
-    "L",
-    "L",
-    "L",
-    0,
-    "J",
-    "J",
-    "J",
-    "T",
-    "T",
-    "T",
-    "S",
-    "L",
-    "T",
-    "T",
-    "T",
-    "Z",
-    "J",
-    0,
-    "I",
-    "L",
-    "L",
-    "L",
-    0,
-    0,
-    0
-  ],
-  [
-    "J",
-    "J",
-    "O",
-    "O",
-    "Z",
-    "I",
-    0,
-    "T",
-    "Z",
-    "Z",
-    "S",
-    "S",
-    "Z",
-    "Z",
-    "T",
-    "L",
-    "L",
-    "L",
-    "J",
-    0,
-    "I",
-    0,
-    0,
-    0,
-    0,
-    "L",
-    0,
-    "L",
-    "L",
-    "J",
-    "I",
-    0,
-    0,
-    0,
-    "L",
-    0,
-    "T",
-    "J",
-    "J",
-    "J",
-    0,
-    "T",
-    "T",
-    "T",
-    "L",
-    "O",
-    "O",
-    "J"
-  ],
-  [
-    "T",
-    "T",
-    "T",
-    "Z",
-    "Z",
-    "I",
-    0,
-    "T",
-    "T",
-    "Z",
-    "Z",
-    0,
-    0,
-    0,
-    0,
-    "L",
-    0,
-    0,
-    0,
-    0,
-    "I",
-    0,
-    "I",
-    "I",
-    0,
-    "J",
-    0,
-    "J",
-    "L",
-    0,
-    "I",
-    0,
-    "J",
-    "L",
-    "L",
-    0,
-    "I",
-    0,
-    0,
-    0,
-    0,
-    "J",
-    "T",
-    "Z",
-    "Z",
-    "O",
-    "O",
-    "J"
-  ],
-  [
-    "Z",
-    "T",
-    "J",
-    "Z",
-    "L",
-    "L",
-    0,
-    "T",
-    "S",
-    "S",
-    "T",
-    0,
-    "O",
-    "O",
-    0,
-    "I",
-    0,
-    "O",
-    "O",
-    0,
-    "I",
-    0,
-    0,
-    0,
-    0,
-    "J",
-    0,
-    "J",
-    "L",
-    0,
-    "I",
-    0,
-    "J",
-    "J",
-    "J",
-    0,
-    "I",
-    0,
-    "O",
-    "O",
-    0,
-    "J",
-    "J",
-    "J",
-    "Z",
-    "Z",
-    "J",
-    "J"
-  ],
-  [
-    "Z",
-    "Z",
-    "J",
-    "J",
-    "J",
-    "L",
-    0,
-    "S",
-    "S",
-    "T",
-    "T",
-    0,
-    "O",
-    "O",
-    0,
-    "I",
-    0,
-    "O",
-    "O",
-    0,
-    "I",
-    0,
-    "I",
-    "I",
-    "J",
-    "J",
-    0,
-    "J",
-    "J",
-    0,
-    "I",
-    0,
-    "L",
-    "L",
-    "L",
-    0,
-    "I",
-    0,
-    "O",
-    "O",
-    0,
-    "I",
-    "I",
-    "I",
-    "I",
-    "L",
-    "L",
-    "I"
-  ],
-  [
-    "L",
-    "Z",
-    "T",
-    "T",
-    "T",
-    "L",
-    0,
-    0,
-    0,
-    0,
-    "T",
-    0,
-    0,
-    0,
-    0,
-    "L",
-    0,
-    0,
-    0,
-    0,
-    "T",
-    0,
-    0,
-    0,
-    0,
-    "L",
-    0,
-    0,
-    0,
-    0,
-    "S",
-    0,
-    "L",
-    "Z",
-    "Z",
-    0,
-    "I",
-    0,
-    0,
-    0,
-    0,
-    "S",
-    "S",
-    "L",
-    "L",
-    "J",
-    "L",
-    "I"
-  ],
-  [
-    "L",
-    "L",
-    "L",
-    "T",
-    "J",
-    "J",
-    "J",
-    "L",
-    "L",
-    "L",
-    "O",
-    "O",
-    "J",
-    "L",
-    "L",
-    "L",
-    "T",
-    "S",
-    "S",
-    "T",
-    "T",
-    "L",
-    "J",
-    "J",
-    "J",
-    "L",
-    "L",
-    "L",
-    "Z",
-    "Z",
-    "S",
-    "S",
-    "O",
-    "O",
-    "Z",
-    "Z",
-    "J",
-    "O",
-    "O",
-    "L",
-    "L",
-    "L",
-    "S",
-    "S",
-    "L",
-    "J",
-    "L",
-    "I"
-  ],
-  [
-    "I",
-    "I",
-    "I",
-    "I",
-    "J",
-    "I",
-    "I",
-    "I",
-    "I",
-    "L",
-    "O",
-    "O",
-    "J",
-    "J",
-    "J",
-    "T",
-    "T",
-    "T",
-    "S",
-    "S",
-    "T",
-    "L",
-    "L",
-    "L",
-    "J",
-    "I",
-    "I",
-    "I",
-    "I",
-    "Z",
-    "Z",
-    "S",
-    "O",
-    "O",
-    "J",
-    "J",
-    "J",
-    "O",
-    "O",
-    "L",
-    "I",
-    "I",
-    "I",
-    "I",
-    "L",
-    "J",
-    "J",
-    "I"
-  ]
-]
 
 // シナリオ
 const SCENARIO = [
@@ -620,10 +121,13 @@ const SCENARIO = [
   [
     {
       type: "I",
-      startX: -1,
-      startY: -4,
-      height: 1,
-      actions: ["rotate(90deg)"]
+      startX: 0,
+      list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      type: "J",
+      startX: 4,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
     }
   ]
 ]
@@ -638,69 +142,66 @@ export const TetrisGridAnimation: React.FC = () => {
         backgroundColor: "white"
       }}
     >
-      {/** 全種類のテトリミノを横並びで描画 */}
-      {Object.keys(TETROMINOS).map((key, i) => {
-        const tet = TETROMINOS[key as keyof typeof TETROMINOS]
-        return tet.map((row, y) => {
-          return row.map((cell, x) => {
-            // @ts-ignore
-            const color = cell === 0 ? "white" : COLORS[key as keyof typeof COLORS]
+      <>
+        {/** シナリオ通りのアニメーション */}
+        {SCENARIO.map((scene, i) => {
+          return scene.map(({ type, list, startX }, j) => {
+            // 30フレームで1行落とすが、その間にlist通りの切り替えを行う
+
+            // list.length分だけ[0,30]区間を分割する
+            const inputRange = Array.from({ length: list.length }, (_, i) => i * (30 / list.length))
+            // 分割した区間のランダムな地点でlistの要素を切り替える
+            const outputRange = list.map((_, i) => i + random(startX))
+
+            const tet =
+              list[
+                Math.floor(
+                  interpolate(frame, inputRange, outputRange, {
+                    extrapolateRight: "clamp"
+                  })
+                )
+              ]
+
             return (
               <AbsoluteFill
-                key={`${key}-${x}-${y}`}
+                key={`${i}-${j}`}
                 style={{
-                  left: x * BLOCK_SIZE + i * BLOCK_SIZE * TET_SIZE,
-                  top: y * BLOCK_SIZE
+                  width: BLOCK_SIZE,
+                  height: BLOCK_SIZE * tet.length,
+                  top: interpolate(
+                    frame,
+                    [random(type) * 30, (random(type) + 1) * 30],
+                    [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * tet.length],
+                    {
+                      extrapolateRight: "clamp"
+                    }
+                  )
                 }}
               >
-                <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={color} />
+                {tet.map((row, y) => {
+                  return row.map((cell, x) => {
+                    return (
+                      <AbsoluteFill
+                        key={`${i}-${j}-${y}-${x}`}
+                        style={{
+                          left: (x + startX) * BLOCK_SIZE + i * BLOCK_SIZE * TET_SIZE,
+                          top: y * BLOCK_SIZE
+                        }}
+                      >
+                        <Rect
+                          width={BLOCK_SIZE}
+                          height={BLOCK_SIZE}
+                          fill={cell === 0 ? "none" : COLORS[type as keyof typeof TETROMINOS]}
+                        />
+                      </AbsoluteFill>
+                    )
+                  })
+                })}
               </AbsoluteFill>
             )
           })
-        })
-      })}
-      {/** シナリオ通りのアニメーション */}
-      {SCENARIO.map((scene, i) => {
-        return scene.map((one, j) => {
-          const tet = TETROMINOS[one.type as keyof typeof TETROMINOS]
-          return (
-            <AbsoluteFill
-              style={{
-                width: BLOCK_SIZE,
-                height: BLOCK_SIZE * tet.length,
-                top: interpolate(
-                  frame,
-                  [0, 30],
-                  [one.startY * BLOCK_SIZE - BLOCK_SIZE, height - BLOCK_SIZE * one.height + one.startY * BLOCK_SIZE],
-                  {
-                    extrapolateRight: "clamp"
-                  }
-                ),
-                transform: one.actions.join(" "),
-                transformOrigin: "left bottom"
-              }}
-            >
-              {tet.map((row, y) => {
-                return row.map((cell, x) => {
-                  // @ts-ignore
-                  const color = cell === 0 ? "none" : COLORS[one.type as keyof typeof COLORS]
-                  return (
-                    <AbsoluteFill
-                      key={`${one.type}-${x}-${y}-${i}-${j}`}
-                      style={{
-                        left: (x + one.startX) * BLOCK_SIZE + i * BLOCK_SIZE * TET_SIZE,
-                        top: y * BLOCK_SIZE
-                      }}
-                    >
-                      <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={color} />
-                    </AbsoluteFill>
-                  )
-                })
-              })}
-            </AbsoluteFill>
-          )
-        })
-      })}
+        })}
+      </>
     </AbsoluteFill>
   )
 }
