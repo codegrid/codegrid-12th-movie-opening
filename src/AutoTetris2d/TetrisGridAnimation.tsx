@@ -207,6 +207,8 @@ const SCENARIO = [
   ]
 ]
 
+const ONE_DURATION = 20
+
 export const TetrisGridAnimation: React.FC = () => {
   const { height } = useVideoConfig()
   const frame = useCurrentFrame()
@@ -221,12 +223,12 @@ export const TetrisGridAnimation: React.FC = () => {
         {/** シナリオ通りのアニメーション */}
         {SCENARIO.map((scene, i) => {
           return (
-            <Sequence from={i * 30}>
+            <Sequence from={i * ONE_DURATION}>
               {scene.map(({ color, list, startX }, j) => {
                 // 30フレームで1行落とすが、その間にlist通りの切り替えを行う
 
-                // list.length分だけ[0,30]区間を分割する
-                const inputRange = Array.from({ length: list.length }, (_, i) => i * (30 / (list.length - 1)))
+                // list.length分だけ[0,ONE_DURATION]区間を分割する
+                const inputRange = Array.from({ length: list.length }, (_, i) => i * (ONE_DURATION / (list.length - 1)))
                 // 分割した区間のランダムな地点でlistの要素を切り替える
                 const outputRange = list.map((_, i) => i + random(startX))
 
@@ -246,8 +248,8 @@ export const TetrisGridAnimation: React.FC = () => {
                       width: BLOCK_SIZE,
                       height: BLOCK_SIZE * tet.length,
                       top: interpolate(
-                        frame - i * 30,
-                        [random(startX) * 30, (random(startX) + 1) * 30],
+                        frame - i * ONE_DURATION,
+                        [random(startX) * ONE_DURATION, (random(startX) + 1) * ONE_DURATION],
                         [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * tet.length],
                         {
                           extrapolateRight: "clamp"
