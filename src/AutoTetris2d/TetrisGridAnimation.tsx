@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Rect } from "@remotion/shapes"
-import { AbsoluteFill, interpolate, random, useCurrentFrame, useVideoConfig } from "remotion"
+import { AbsoluteFill, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
 import { BLOCK_SIZE } from "./const"
 
 const TET_SIZE = 4
@@ -94,8 +94,8 @@ const TETROMINOS = {
       [1, 0, 0]
     ],
     rotateL: [
-      [1, 1, 0],
-      [0, 1, 0]
+      [0, 0, 1],
+      [1, 1, 1]
     ]
   },
   J: {
@@ -125,9 +125,21 @@ const SCENARIO = [
       list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
     },
     {
-      type: "J",
+      type: "I",
+      startX: 5,
+      list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    }
+  ],
+  [
+    {
+      type: "L",
       startX: 4,
-      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateR]
+    },
+    {
+      type: "J",
+      startX: 7,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateL]
     }
   ]
 ]
@@ -145,61 +157,65 @@ export const TetrisGridAnimation: React.FC = () => {
       <>
         {/** シナリオ通りのアニメーション */}
         {SCENARIO.map((scene, i) => {
-          return scene.map(({ type, list, startX }, j) => {
-            // 30フレームで1行落とすが、その間にlist通りの切り替えを行う
+          return (
+            <Sequence from={i * 30}>
+              {scene.map(({ type, list, startX }, j) => {
+                // 30フレームで1行落とすが、その間にlist通りの切り替えを行う
 
-            // list.length分だけ[0,30]区間を分割する
-            const inputRange = Array.from({ length: list.length }, (_, i) => i * (30 / list.length))
-            // 分割した区間のランダムな地点でlistの要素を切り替える
-            const outputRange = list.map((_, i) => i + random(startX))
+                // list.length分だけ[0,30]区間を分割する
+                const inputRange = Array.from({ length: list.length }, (_, i) => i * (30 / list.length))
+                // 分割した区間のランダムな地点でlistの要素を切り替える
+                const outputRange = list.map((_, i) => i + random(startX))
 
-            const tet =
-              list[
-                Math.floor(
-                  interpolate(frame, inputRange, outputRange, {
-                    extrapolateRight: "clamp"
-                  })
-                )
-              ]
-
-            return (
-              <AbsoluteFill
-                key={`${i}-${j}`}
-                style={{
-                  width: BLOCK_SIZE,
-                  height: BLOCK_SIZE * tet.length,
-                  top: interpolate(
-                    frame,
-                    [random(type) * 30, (random(type) + 1) * 30],
-                    [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * tet.length],
-                    {
-                      extrapolateRight: "clamp"
-                    }
-                  )
-                }}
-              >
-                {tet.map((row, y) => {
-                  return row.map((cell, x) => {
-                    return (
-                      <AbsoluteFill
-                        key={`${i}-${j}-${y}-${x}`}
-                        style={{
-                          left: (x + startX) * BLOCK_SIZE + i * BLOCK_SIZE * TET_SIZE,
-                          top: y * BLOCK_SIZE
-                        }}
-                      >
-                        <Rect
-                          width={BLOCK_SIZE}
-                          height={BLOCK_SIZE}
-                          fill={cell === 0 ? "none" : COLORS[type as keyof typeof TETROMINOS]}
-                        />
-                      </AbsoluteFill>
+                const tet =
+                  list[
+                    Math.floor(
+                      interpolate(frame, inputRange, outputRange, {
+                        extrapolateRight: "clamp"
+                      })
                     )
-                  })
-                })}
-              </AbsoluteFill>
-            )
-          })
+                  ]
+
+                return (
+                  <AbsoluteFill
+                    key={`${i}-${j}`}
+                    style={{
+                      width: BLOCK_SIZE,
+                      height: BLOCK_SIZE * tet.length,
+                      top: interpolate(
+                        frame - i * 30,
+                        [random(startX) * 30, (random(startX) + 1) * 30],
+                        [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * tet.length],
+                        {
+                          extrapolateRight: "clamp"
+                        }
+                      )
+                    }}
+                  >
+                    {tet.map((row, y) => {
+                      return row.map((cell, x) => {
+                        return (
+                          <AbsoluteFill
+                            key={`${i}-${j}-${y}-${x}`}
+                            style={{
+                              left: (x + startX) * BLOCK_SIZE,
+                              top: y * BLOCK_SIZE
+                            }}
+                          >
+                            <Rect
+                              width={BLOCK_SIZE}
+                              height={BLOCK_SIZE}
+                              fill={cell === 0 ? "none" : COLORS[type as keyof typeof TETROMINOS]}
+                            />
+                          </AbsoluteFill>
+                        )
+                      })
+                    })}
+                  </AbsoluteFill>
+                )
+              })}
+            </Sequence>
+          )
         })}
       </>
     </AbsoluteFill>
