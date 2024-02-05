@@ -232,7 +232,7 @@ const SCENARIO = [
   ]
 ]
 
-const ONE_DURATION = 20
+const ONE_DURATION = 15
 
 export const TetrisGridAnimation: React.FC = () => {
   const { height } = useVideoConfig()
