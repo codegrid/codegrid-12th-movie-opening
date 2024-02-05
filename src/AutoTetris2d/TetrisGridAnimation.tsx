@@ -184,6 +184,12 @@ const SCENARIO = [
       color: "I",
       startX: 47,
       list: [TETROMINOS.I.default, TETROMINOS.I.default]
+    },
+    {
+      color: "L",
+      startX: 0,
+      endY: 1,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
     }
   ],
   [
@@ -249,7 +255,7 @@ export const TetrisGridAnimation: React.FC = () => {
         {SCENARIO.map((scene, i) => {
           return (
             <Sequence from={i * ONE_DURATION}>
-              {scene.map(({ color, list, startX }, j) => {
+              {scene.map(({ color, list, startX, endY = 0 }, j) => {
                 // 30フレームで1行落とすが、その間にlist通りの切り替えを行う
 
                 // list.length分だけ[0,ONE_DURATION]区間を分割する
@@ -275,7 +281,7 @@ export const TetrisGridAnimation: React.FC = () => {
                       top: interpolate(
                         frame - i * ONE_DURATION,
                         [random(startX) * ONE_DURATION, (random(startX) + 1) * ONE_DURATION],
-                        [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * tet.length],
+                        [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * (tet.length + endY)],
                         {
                           extrapolateRight: "clamp"
                         }
