@@ -555,7 +555,7 @@ export const TetrisGridAnimation: React.FC = () => {
                         [random(startX) * ONE_DURATION, (random(startX) + 1) * ONE_DURATION],
                         [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * (tet.length + endY)],
                         {
-                          easing: Easing.inOut((t) => stepEasing(t, tet.length), Easing.ease),
+                          easing: Easing.in((t) => stepEasing(t, tet.length)),
                           extrapolateLeft: "clamp",
                           extrapolateRight: "clamp"
                         }
@@ -572,6 +572,7 @@ export const TetrisGridAnimation: React.FC = () => {
                               top: y * BLOCK_SIZE
                             }}
                           >
+                            {x === 0 && y === 0 && <AbsoluteFill>{startX}</AbsoluteFill>}
                             <Rect
                               width={BLOCK_SIZE}
                               height={BLOCK_SIZE}
