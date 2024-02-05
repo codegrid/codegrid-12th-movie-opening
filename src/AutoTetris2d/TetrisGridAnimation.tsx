@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Rect } from "@remotion/shapes"
 import { AbsoluteFill, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
 import { BLOCK_SIZE } from "./const"
@@ -63,6 +62,10 @@ const TETROMINOS = {
       [0, 2],
       [2, 2],
       [2, 0]
+    ],
+    inverse: [
+      [2, 2, 0],
+      [0, 2, 2]
     ]
   },
   Z: {
@@ -118,26 +121,88 @@ const SCENARIO = [
   // 1番下の行を埋めるまで
   [
     {
-      type: "I",
+      color: "I",
       startX: 0,
       list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
     },
     {
-      type: "I",
+      color: "I",
       startX: 5,
       list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      color: "O",
+      startX: 10,
+      list: [TETROMINOS.O.default, TETROMINOS.O.rotateR]
+    },
+    {
+      color: "J",
+      startX: 12,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
+    },
+    {
+      color: "T",
+      startX: 15,
+      list: [TETROMINOS.T.default, TETROMINOS.T.default]
+    },
+    {
+      color: "L",
+      startX: 21,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
+    },
+    {
+      color: "I",
+      startX: 25,
+      list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      color: "O",
+      startX: 32,
+      list: [TETROMINOS.O.default, TETROMINOS.O.default]
+    },
+    {
+      color: "J",
+      startX: 34,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateL]
     }
   ],
   [
     {
-      type: "L",
+      color: "J",
       startX: 4,
       list: [TETROMINOS.L.default, TETROMINOS.L.rotateR]
     },
     {
-      type: "J",
+      color: "L",
       startX: 7,
       list: [TETROMINOS.J.default, TETROMINOS.J.rotateL]
+    },
+    {
+      color: "S",
+      startX: 17,
+      list: [TETROMINOS.S.default, TETROMINOS.S.rotateL, TETROMINOS.S.inverse]
+    },
+    {
+      color: "J",
+      startX: 22,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateL]
+    },
+    {
+      color: "Z",
+      startX: 28,
+      list: [TETROMINOS.Z.default, TETROMINOS.Z.default]
+    }
+  ],
+  [
+    {
+      color: "T",
+      startX: 19,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
+    },
+    {
+      color: "S",
+      startX: 30,
+      list: [TETROMINOS.S.default, TETROMINOS.S.rotateR]
     }
   ]
 ]
@@ -157,11 +222,11 @@ export const TetrisGridAnimation: React.FC = () => {
         {SCENARIO.map((scene, i) => {
           return (
             <Sequence from={i * 30}>
-              {scene.map(({ type, list, startX }, j) => {
+              {scene.map(({ color, list, startX }, j) => {
                 // 30フレームで1行落とすが、その間にlist通りの切り替えを行う
 
                 // list.length分だけ[0,30]区間を分割する
-                const inputRange = Array.from({ length: list.length }, (_, i) => i * (30 / list.length))
+                const inputRange = Array.from({ length: list.length }, (_, i) => i * (30 / (list.length - 1)))
                 // 分割した区間のランダムな地点でlistの要素を切り替える
                 const outputRange = list.map((_, i) => i + random(startX))
 
@@ -203,7 +268,7 @@ export const TetrisGridAnimation: React.FC = () => {
                             <Rect
                               width={BLOCK_SIZE}
                               height={BLOCK_SIZE}
-                              fill={cell === 0 ? "none" : COLORS[type as keyof typeof TETROMINOS]}
+                              fill={cell === 0 ? "none" : COLORS[color as keyof typeof TETROMINOS]}
                             />
                           </AbsoluteFill>
                         )
