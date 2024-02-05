@@ -26,8 +26,9 @@ export const TetrisGridAnimation: React.FC = () => {
       <>
         {/** シナリオ通りのアニメーション */}
         {SCENARIO.map((scene, i) => {
+          const startT = 0.5 * i * ONE_DURATION
           return (
-            <Sequence from={i * ONE_DURATION}>
+            <Sequence from={startT}>
               {scene.map(({ color, list, startX, endY = 0 }, j) => {
                 // 30フレームで1行落とすが、その間にlist通りの切り替えを行う
 
@@ -39,7 +40,7 @@ export const TetrisGridAnimation: React.FC = () => {
                 const tet =
                   list[
                     Math.floor(
-                      interpolate(frame - i * ONE_DURATION, inputRange, outputRange, {
+                      interpolate(frame - startT, inputRange, outputRange, {
                         easing: (t) => stepEasing(t, list.length),
                         extrapolateLeft: "clamp",
                         extrapolateRight: "clamp"
@@ -54,7 +55,7 @@ export const TetrisGridAnimation: React.FC = () => {
                       width: BLOCK_SIZE,
                       height: BLOCK_SIZE * tet.length,
                       top: interpolate(
-                        frame - i * ONE_DURATION,
+                        frame - startT,
                         [random(startX) * ONE_DURATION, (random(startX) + 1) * ONE_DURATION],
                         [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * (tet.length + endY)],
                         {
