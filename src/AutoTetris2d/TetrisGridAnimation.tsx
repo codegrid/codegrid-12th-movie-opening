@@ -1,5 +1,6 @@
 import { Rect } from "@remotion/shapes"
 import { AbsoluteFill, Easing, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
+import { Background } from "../Background"
 import { BLOCK_SIZE } from "./const"
 
 const COLORS = {
@@ -422,11 +423,8 @@ export const TetrisGridAnimation: React.FC = () => {
   const frame = useCurrentFrame()
 
   return (
-    <AbsoluteFill
-      style={{
-        backgroundColor: "white"
-      }}
-    >
+    <AbsoluteFill>
+      <Background />
       <>
         {/** シナリオ通りのアニメーション */}
         {SCENARIO.map((scene, i) => {

@@ -8,7 +8,16 @@ export const Background: React.FC = () => {
         backgroundColor: "#fff"
       }}
     >
-      <Img src={staticFile("codegrid-wave.svg")} />
+      <Img
+        src={staticFile("codegrid-wave.svg")}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
+          transform: "rotate(180deg)"
+        }}
+      />
     </AbsoluteFill>
   )
 }
