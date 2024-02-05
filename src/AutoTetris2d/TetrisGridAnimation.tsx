@@ -3,8 +3,6 @@ import { Rect } from "@remotion/shapes"
 import { AbsoluteFill, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
 import { BLOCK_SIZE } from "./const"
 
-const TET_SIZE = 4
-
 const COLORS = {
   I: "#9ADCFF",
   O: "#FFF89A",
