@@ -501,6 +501,18 @@ const SCENARIO = [
 
 const ONE_DURATION = 10
 
+// コマ送りイージング関数
+// 'steps' はアニメーションのステップ数を表す
+// 't' は進行度を表し、0から1までの値を取ります
+const stepEasing = (t: number, steps: number) => {
+  // 進行度に応じてステップ数に変換
+  const stepSize = 1 / steps
+  // 進行度をステップ数で割った結果を切り捨てて、現在のステップ位置を計算
+  const stepIndex = Math.floor(t / stepSize)
+  // 現在のステップ位置に基づいて値を返す
+  return stepIndex * stepSize
+}
+
 export const TetrisGridAnimation: React.FC = () => {
   const { height } = useVideoConfig()
   const frame = useCurrentFrame()
@@ -525,6 +537,7 @@ export const TetrisGridAnimation: React.FC = () => {
                   list[
                     Math.floor(
                       interpolate(frame - i * ONE_DURATION, inputRange, outputRange, {
+                        easing: (t) => stepEasing(t, list.length),
                         extrapolateLeft: "clamp",
                         extrapolateRight: "clamp"
                       })
@@ -542,6 +555,8 @@ export const TetrisGridAnimation: React.FC = () => {
                         [random(startX) * ONE_DURATION, (random(startX) + 1) * ONE_DURATION],
                         [-BLOCK_SIZE * tet.length, height - BLOCK_SIZE * (tet.length + endY)],
                         {
+                          easing: Easing.inOut((t) => stepEasing(t, tet.length), Easing.ease),
+                          extrapolateLeft: "clamp",
                           extrapolateRight: "clamp"
                         }
                       )
