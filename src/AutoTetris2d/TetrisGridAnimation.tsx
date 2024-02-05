@@ -171,9 +171,9 @@ const SCENARIO = [
       list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
     },
     {
-      color: "O",
+      color: "Z",
       startX: 32,
-      list: [TETROMINOS.O.default, TETROMINOS.O.default]
+      list: [TETROMINOS.S.default, TETROMINOS.S.default]
     },
     {
       color: "J",
@@ -258,9 +258,9 @@ const SCENARIO = [
       list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
     },
     {
-      color: "S",
+      color: "T",
       startX: 30,
-      list: [TETROMINOS.S.default, TETROMINOS.S.rotateR]
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL, TETROMINOS.T.inverse]
     },
     {
       color: "I",
@@ -312,6 +312,12 @@ const SCENARIO = [
       startX: 25,
       endY: 4,
       list: [TETROMINOS.I.default, TETROMINOS.I.default]
+    },
+    {
+      color: "I",
+      startX: 30,
+      endY: 2,
+      list: [TETROMINOS.I.default, TETROMINOS.I.default]
     }
   ],
   // 下から3段目
@@ -345,6 +351,12 @@ const SCENARIO = [
       startX: 24,
       endY: 8,
       list: [TETROMINOS.J.default, TETROMINOS.J.default]
+    },
+    {
+      color: "L",
+      startX: 28,
+      endY: 6,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateL]
     }
   ],
   [
@@ -389,6 +401,12 @@ const SCENARIO = [
       startX: 25,
       endY: 10,
       list: [TETROMINOS.S.default, TETROMINOS.S.rotateR]
+    },
+    {
+      color: "O",
+      startX: 28,
+      endY: 7,
+      list: [TETROMINOS.O.default, TETROMINOS.O.default]
     }
   ],
   [
