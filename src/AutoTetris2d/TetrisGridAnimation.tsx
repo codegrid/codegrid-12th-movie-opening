@@ -101,6 +101,11 @@ const TETROMINOS = {
     rotateL: [
       [0, 0, 1],
       [1, 1, 1]
+    ],
+    inverse: [
+      [1, 1],
+      [0, 1],
+      [0, 1]
     ]
   },
   J: {
@@ -220,6 +225,18 @@ const SCENARIO = [
       color: "L",
       startX: 39,
       list: [TETROMINOS.L.default, TETROMINOS.L.rotateR]
+    },
+    {
+      color: "L",
+      startX: 13,
+      endY: 1,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateL]
+    },
+    {
+      color: "T",
+      startX: 9,
+      endY: 2,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
     }
   ],
   [
@@ -232,6 +249,18 @@ const SCENARIO = [
       color: "S",
       startX: 30,
       list: [TETROMINOS.S.default, TETROMINOS.S.rotateR]
+    },
+    {
+      color: "I",
+      startX: 15,
+      endY: 3,
+      list: [TETROMINOS.I.default, TETROMINOS.I.default]
+    },
+    {
+      color: "S",
+      startX: 7,
+      endY: 3,
+      list: [TETROMINOS.S.default, TETROMINOS.S.default]
     }
   ],
   // 下から2段目
@@ -247,6 +276,12 @@ const SCENARIO = [
       startX: 2,
       endY: 1,
       list: [TETROMINOS.T.default, TETROMINOS.T.rotateL, TETROMINOS.T.inverse]
+    },
+    {
+      color: "T",
+      startX: 7,
+      endY: 4,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateR]
     }
   ],
   // 下から3段目
@@ -256,11 +291,131 @@ const SCENARIO = [
       startX: 0,
       endY: 2,
       list: [TETROMINOS.Z.default, TETROMINOS.Z.rotateL]
+    },
+    {
+      color: "J",
+      startX: 2,
+      endY: 3,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
+    },
+    {
+      color: "Z",
+      startX: 8,
+      endY: 5,
+      list: [TETROMINOS.Z.default, TETROMINOS.Z.default]
+    }
+  ],
+  [
+    {
+      color: "T",
+      startX: 0,
+      endY: 4,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL, TETROMINOS.T.inverse]
+    },
+    {
+      color: "L",
+      startX: 4,
+      endY: 2,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateR, TETROMINOS.L.inverse]
+    },
+    {
+      color: "O",
+      startX: 7,
+      endY: 7,
+      list: [TETROMINOS.O.default, TETROMINOS.O.default]
+    },
+    {
+      color: "S",
+      startX: 9,
+      endY: 6,
+      list: [TETROMINOS.S.default, TETROMINOS.S.rotateL, TETROMINOS.S.inverse]
+    }
+  ],
+  [
+    {
+      color: "J",
+      startX: 0,
+      endY: 6,
+      list: [TETROMINOS.J.default, TETROMINOS.J.default]
+    },
+    {
+      color: "Z",
+      startX: 3,
+      endY: 4,
+      list: [TETROMINOS.Z.default, TETROMINOS.Z.rotateR]
+    },
+    {
+      color: "I",
+      startX: 5,
+      endY: 5,
+      list: [TETROMINOS.I.default, TETROMINOS.I.default]
+    },
+    {
+      color: "Z",
+      startX: 11,
+      endY: 6,
+      list: [TETROMINOS.Z.default, TETROMINOS.Z.default]
+    }
+  ],
+  [
+    {
+      color: "O",
+      startX: 2,
+      endY: 6,
+      list: [TETROMINOS.O.default, TETROMINOS.O.default]
+    },
+    {
+      color: "T",
+      startX: 9,
+      endY: 8,
+      list: [TETROMINOS.T.default, TETROMINOS.T.default]
+    },
+    {
+      color: "T",
+      startX: 13,
+      endY: 6,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL, TETROMINOS.T.inverse]
+    }
+  ],
+  [
+    {
+      color: "L",
+      startX: 2,
+      endY: 7,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateL]
+    },
+    {
+      color: "I",
+      startX: 7,
+      endY: 10,
+      list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      color: "S",
+      startX: 11,
+      endY: 8,
+      list: [TETROMINOS.S.default, TETROMINOS.S.rotateR]
+    }
+  ],
+  [
+    {
+      color: "T",
+      startX: 3,
+      endY: 9,
+      list: [TETROMINOS.T.default, TETROMINOS.T.default]
+    }
+  ],
+  [
+    {
+      color: "S",
+      startX: 4,
+      endY: 10,
+      list: [TETROMINOS.S.default, TETROMINOS.S.rotateL, TETROMINOS.S.inverse]
     }
   ]
 ]
 
-const ONE_DURATION = 20
+const ONE_DURATION = 10
 
 export const TetrisGridAnimation: React.FC = () => {
   const { height } = useVideoConfig()
