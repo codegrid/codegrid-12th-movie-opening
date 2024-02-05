@@ -1,5 +1,5 @@
 import { Rect } from "@remotion/shapes"
-import { AbsoluteFill, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
+import { AbsoluteFill, Easing, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
 import { BLOCK_SIZE } from "./const"
 
 const COLORS = {
@@ -46,6 +46,10 @@ const TETROMINOS = {
       [0, 6],
       [6, 6],
       [0, 6]
+    ],
+    inverse: [
+      [6, 6, 6],
+      [0, 6, 0]
     ]
   },
   S: {
@@ -118,7 +122,7 @@ const TETROMINOS = {
 
 // シナリオ
 const SCENARIO = [
-  // 1番下の行を埋めるまで
+  // 下から1段目
   [
     {
       color: "I",
@@ -184,12 +188,6 @@ const SCENARIO = [
       color: "I",
       startX: 47,
       list: [TETROMINOS.I.default, TETROMINOS.I.default]
-    },
-    {
-      color: "L",
-      startX: 0,
-      endY: 1,
-      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
     }
   ],
   [
@@ -235,10 +233,34 @@ const SCENARIO = [
       startX: 30,
       list: [TETROMINOS.S.default, TETROMINOS.S.rotateR]
     }
+  ],
+  // 下から2段目
+  [
+    {
+      color: "L",
+      startX: 0,
+      endY: 1,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
+    },
+    {
+      color: "T",
+      startX: 2,
+      endY: 1,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL, TETROMINOS.T.inverse]
+    }
+  ],
+  // 下から3段目
+  [
+    {
+      color: "Z",
+      startX: 0,
+      endY: 2,
+      list: [TETROMINOS.Z.default, TETROMINOS.Z.rotateL]
+    }
   ]
 ]
 
-const ONE_DURATION = 15
+const ONE_DURATION = 20
 
 export const TetrisGridAnimation: React.FC = () => {
   const { height } = useVideoConfig()
@@ -266,7 +288,8 @@ export const TetrisGridAnimation: React.FC = () => {
                 const tet =
                   list[
                     Math.floor(
-                      interpolate(frame, inputRange, outputRange, {
+                      interpolate(frame - i * ONE_DURATION, inputRange, outputRange, {
+                        extrapolateLeft: "clamp",
                         extrapolateRight: "clamp"
                       })
                     )
