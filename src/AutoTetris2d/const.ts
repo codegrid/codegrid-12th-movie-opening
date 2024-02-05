@@ -251,6 +251,12 @@ export const SCENARIO = [
       startX: 25,
       endY: 1,
       list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
+    },
+    {
+      color: "T",
+      startX: 34,
+      endY: 1,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL, TETROMINOS.T.inverse]
     }
   ],
   [
@@ -281,6 +287,12 @@ export const SCENARIO = [
       startX: 22,
       endY: 3,
       list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      color: "J",
+      startX: 34,
+      endY: 3,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateL]
     }
   ],
   // 下から2段目
@@ -320,6 +332,12 @@ export const SCENARIO = [
       startX: 30,
       endY: 2,
       list: [TETROMINOS.I.default, TETROMINOS.I.default]
+    },
+    {
+      color: "O",
+      startX: 32,
+      endY: 2,
+      list: [TETROMINOS.O.default, TETROMINOS.O.default]
     }
   ],
   // 下から3段目
@@ -359,6 +377,12 @@ export const SCENARIO = [
       startX: 28,
       endY: 6,
       list: [TETROMINOS.L.default, TETROMINOS.L.rotateL]
+    },
+    {
+      color: "L",
+      startX: 32,
+      endY: 4,
+      list: [TETROMINOS.J.default, TETROMINOS.J.rotateR]
     }
   ],
   [
@@ -409,6 +433,12 @@ export const SCENARIO = [
       startX: 27,
       endY: 6,
       list: [TETROMINOS.L.default, TETROMINOS.L.rotateR]
+    },
+    {
+      color: "Z",
+      startX: 32,
+      endY: 5,
+      list: [TETROMINOS.Z.default, TETROMINOS.Z.default]
     }
   ],
   [
@@ -447,6 +477,12 @@ export const SCENARIO = [
       startX: 27,
       endY: 8,
       list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      color: "L",
+      startX: 34,
+      endY: 4,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateL, TETROMINOS.L.inverse]
     }
   ],
   [
@@ -469,13 +505,25 @@ export const SCENARIO = [
       list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
     },
     {
-      color: "T",
-      startX: 29,
-      endY: 9,
-      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
+      color: "J",
+      startX: 35,
+      endY: 5,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateL, TETROMINOS.L.inverse]
     }
   ],
   [
+    {
+      color: "I",
+      startX: 32,
+      endY: 8,
+      list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      color: "T",
+      startX: 30,
+      endY: 8,
+      list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
+    },
     {
       color: "L",
       startX: 2,
@@ -499,15 +547,23 @@ export const SCENARIO = [
       startX: 15,
       endY: 6,
       list: [TETROMINOS.Z.default, TETROMINOS.Z.default]
-    },
+    }
+  ],
+  [
+    {
+      color: "S",
+      startX: 29,
+      endY: 10,
+      list: [TETROMINOS.S.default, TETROMINOS.S.default]
+    }
+  ],
+  [
     {
       color: "Z",
       startX: 28,
       endY: 10,
       list: [TETROMINOS.Z.default, TETROMINOS.Z.rotateR]
-    }
-  ],
-  [
+    },
     {
       color: "T",
       startX: 3,
@@ -519,15 +575,15 @@ export const SCENARIO = [
       startX: 17,
       endY: 6,
       list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
-    },
+    }
+  ],
+  [
     {
       color: "L",
       startX: 27,
       endY: 10,
       list: [TETROMINOS.J.default, TETROMINOS.J.rotateL, TETROMINOS.J.inverse]
-    }
-  ],
-  [
+    },
     {
       color: "S",
       startX: 4,
