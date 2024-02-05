@@ -164,6 +164,26 @@ const SCENARIO = [
       color: "J",
       startX: 34,
       list: [TETROMINOS.L.default, TETROMINOS.L.rotateL]
+    },
+    {
+      color: "O",
+      startX: 37,
+      list: [TETROMINOS.O.default, TETROMINOS.O.default]
+    },
+    {
+      color: "I",
+      startX: 40,
+      list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
+    },
+    {
+      color: "J",
+      startX: 45,
+      list: [TETROMINOS.L.default, TETROMINOS.L.default]
+    },
+    {
+      color: "I",
+      startX: 47,
+      list: [TETROMINOS.I.default, TETROMINOS.I.default]
     }
   ],
   [
@@ -191,6 +211,11 @@ const SCENARIO = [
       color: "Z",
       startX: 28,
       list: [TETROMINOS.Z.default, TETROMINOS.Z.default]
+    },
+    {
+      color: "L",
+      startX: 39,
+      list: [TETROMINOS.L.default, TETROMINOS.L.rotateR]
     }
   ],
   [
