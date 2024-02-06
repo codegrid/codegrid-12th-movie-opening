@@ -1,8 +1,8 @@
 /* eslint-disable capitalized-comments */
 import { Rect } from "@remotion/shapes"
 import { AbsoluteFill, Easing, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
-import { Background } from "../Background"
-import { BLOCK_SIZE, COLORS, ONE_DURATION, SCENARIO, TETROMINOS } from "./const"
+import { CodeGridWave } from "../background/CodeGridWave"
+import { BLOCK_SIZE, COLORS, ONE_DURATION, SCENARIO, TETROMINOS } from "./tetris-settings"
 
 // コマ送りイージング関数
 // 'steps' はアニメーションのステップ数を表す
@@ -16,13 +16,13 @@ const stepEasing = (t: number, steps: number) => {
   return stepIndex * stepSize
 }
 
-export const TetrisGridAnimation: React.FC = () => {
+export const CodeGridTetris: React.FC = () => {
   const { height } = useVideoConfig()
   const frame = useCurrentFrame()
 
   return (
     <AbsoluteFill>
-      <Background />
+      <CodeGridWave />
       <>
         {/** シナリオ通りのアニメーション */}
         {SCENARIO.map((scene, i) => {

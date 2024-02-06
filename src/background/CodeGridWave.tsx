@@ -1,7 +1,7 @@
 import React from "react"
 import { AbsoluteFill, Img, staticFile } from "remotion"
 
-export const Background: React.FC = () => {
+export const CodeGridWave: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
