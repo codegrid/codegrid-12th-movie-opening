@@ -1,6 +1,6 @@
-# Movie for CodeGrid Party 2024
+# codegrid-12th-movie
 
-2024年CodeGridパーティー用動画を制作する[Remotion](https://remotion.dev)プロジェクト
+CodeGrid12周年パーティー用動画を制作する[Remotion](https://remotion.dev)プロジェクト
 
 ## Commands
 
