@@ -12,7 +12,6 @@
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
-    "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^9.97.0",
     "@react-three/fiber": "^8.8.10",
     "@remotion/cli": "4.0.102",
