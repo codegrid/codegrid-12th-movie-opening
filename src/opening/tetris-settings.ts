@@ -133,6 +133,8 @@ export const TETROMINOS = {
   }
 }
 
+export type TetriminoType = keyof typeof TETROMINOS
+
 // シナリオ
 export const SCENARIO = [
   // 下から1段目

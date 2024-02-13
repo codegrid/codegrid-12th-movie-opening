@@ -19,7 +19,7 @@ import { CodeGridTetris } from "./opening/CodeGridTetris"
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="MyComp" component={CodeGridTetris} durationInFrames={120} fps={30} width={1920} height={1080} />
+      <Composition id="Scene" component={CodeGridTetris} durationInFrames={120} fps={30} width={1920} height={1080} />
     </>
   )
 }

@@ -1,8 +1,17 @@
 /* eslint-disable capitalized-comments */
-import { Rect } from "@remotion/shapes"
-import { AbsoluteFill, Easing, interpolate, random, Sequence, useCurrentFrame, useVideoConfig } from "remotion"
+import {
+  AbsoluteFill,
+  Easing,
+  getRemotionEnvironment,
+  interpolate,
+  random,
+  Sequence,
+  useCurrentFrame,
+  useVideoConfig
+} from "remotion"
 import { CodeGridWave } from "../background/CodeGridWave"
-import { BLOCK_SIZE, COLORS, ONE_DURATION, SCENARIO, TETROMINOS } from "./tetris-settings"
+import { Tetrimino } from "./Tetrimino"
+import { BLOCK_SIZE, COLORS, ONE_DURATION, SCENARIO, TetriminoType } from "./tetris-settings"
 
 // コマ送りイージング関数
 // 'steps' はアニメーションのステップ数を表す
@@ -17,6 +26,7 @@ const stepEasing = (t: number, steps: number) => {
 }
 
 export const CodeGridTetris: React.FC = () => {
+  const { isStudio } = getRemotionEnvironment()
   const { height } = useVideoConfig()
   const frame = useCurrentFrame()
 
@@ -67,26 +77,9 @@ export const CodeGridTetris: React.FC = () => {
                       )
                     }}
                   >
-                    {tet.map((row, y) => {
-                      return row.map((cell, x) => {
-                        return (
-                          <AbsoluteFill
-                            key={`${i}-${j}-${y}-${x}`}
-                            style={{
-                              left: (x + startX) * BLOCK_SIZE,
-                              top: y * BLOCK_SIZE
-                            }}
-                          >
-                            {x === 0 && y === 0 && <AbsoluteFill>{startX}</AbsoluteFill>}
-                            <Rect
-                              width={BLOCK_SIZE}
-                              height={BLOCK_SIZE}
-                              fill={cell === 0 ? "none" : COLORS[color as keyof typeof TETROMINOS]}
-                            />
-                          </AbsoluteFill>
-                        )
-                      })
-                    })}
+                    <Tetrimino blocks={tet} offsetX={startX} color={COLORS[color as TetriminoType]} />
+                    {/** デバッグ用 */}
+                    {isStudio && <AbsoluteFill style={{ left: startX * BLOCK_SIZE }}>{startX}</AbsoluteFill>}
                   </AbsoluteFill>
                 )
               })}
