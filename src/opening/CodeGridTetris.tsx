@@ -26,7 +26,7 @@ export const CodeGridTetris: React.FC = () => {
       <CodeGridWave />
       <>
         {SCENARIO.map((scene, i) => {
-          const startT = 0.5 * i * ONE_DURATION
+          const startT = i * ONE_DURATION
           return (
             <>
               {scene.map(({ color, list, startX, endY = 0 }, j) => {

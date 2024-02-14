@@ -3,7 +3,7 @@ export const BLOCK_SIZE = 40
 // テトリミノの1辺の最長
 export const TET_SIZE = 4
 
-export const ONE_DURATION = 12
+export const ONE_DURATION = 8
 
 export const COLORS = {
   I: "#9ADCFF",
@@ -517,20 +517,6 @@ export const SCENARIO = [
   ],
   [
     {
-      color: "S",
-      startX: 29,
-      endY: 10,
-      list: [TETROMINOS.S.default, TETROMINOS.S.default]
-    }
-  ],
-  [
-    {
-      color: "Z",
-      startX: 28,
-      endY: 10,
-      list: [TETROMINOS.Z.default, TETROMINOS.Z.rotateR]
-    },
-    {
       color: "T",
       startX: 3,
       endY: 9,
@@ -541,6 +527,12 @@ export const SCENARIO = [
       startX: 17,
       endY: 6,
       list: [TETROMINOS.T.default, TETROMINOS.T.rotateL]
+    },
+    {
+      color: "S",
+      startX: 29,
+      endY: 10,
+      list: [TETROMINOS.S.default, TETROMINOS.S.default]
     }
   ],
   [
@@ -561,6 +553,12 @@ export const SCENARIO = [
       startX: 18,
       endY: 9,
       list: [TETROMINOS.S.default, TETROMINOS.S.rotateL]
+    },
+    {
+      color: "Z",
+      startX: 28,
+      endY: 10,
+      list: [TETROMINOS.Z.default, TETROMINOS.Z.rotateR]
     }
   ]
 ]
