@@ -137,7 +137,6 @@ export type TetriminoType = keyof typeof TETROMINOS
 
 // シナリオ
 export const SCENARIO = [
-  // 下から1段目
   [
     {
       color: "I",
@@ -261,7 +260,6 @@ export const SCENARIO = [
       list: [TETROMINOS.I.default, TETROMINOS.I.rotateR]
     }
   ],
-  // 下から2段目
   [
     {
       color: "L",
@@ -312,7 +310,6 @@ export const SCENARIO = [
       list: [TETROMINOS.S.default, TETROMINOS.S.rotateL]
     }
   ],
-  // 下から3段目
   [
     {
       color: "Z",
