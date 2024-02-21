@@ -518,12 +518,6 @@ export const SCENARIO = [
       list: [TETROMINOS.T.default, TETROMINOS.T.rotateL, TETROMINOS.T.inverse]
     },
     {
-      color: "S",
-      startX: 46,
-      endY: 5,
-      list: [TETROMINOS.S.default, TETROMINOS.S.rotateL]
-    },
-    {
       color: "L",
       startX: 40,
       endY: 9,
