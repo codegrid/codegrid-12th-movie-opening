@@ -1,8 +1,8 @@
 /* eslint-disable capitalized-comments */
-import { ExplosionBlock } from "./ExplosionBlock"
+import { ParticleTetrimino } from "./ParticleTetrimino"
 import { COLORS, SCENARIO, TetriminoType } from "./tetris-settings"
 
-export const ExplosionCodeGridTetris: React.FC = () => {
+export const ParticleCodeGridTetris: React.FC = () => {
   return (
     <>
       {SCENARIO.map((scene) => {
@@ -11,7 +11,12 @@ export const ExplosionCodeGridTetris: React.FC = () => {
             {scene.map(({ color, list, startX, endY }) => {
               const tet = list[list.length - 1]
               return (
-                <ExplosionBlock blocks={tet} offsetX={startX} endY={endY ?? 0} color={COLORS[color as TetriminoType]} />
+                <ParticleTetrimino
+                  blocks={tet}
+                  offsetX={startX}
+                  endY={endY ?? 0}
+                  color={COLORS[color as TetriminoType]}
+                />
               )
             })}
           </>

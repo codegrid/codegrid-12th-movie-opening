@@ -12,7 +12,7 @@ interface Props {
   color: string
 }
 
-export const ExplosionBlock: React.FC<Props> = ({ blocks, offsetX, color, endY }) => {
+export const ParticleTetrimino: React.FC<Props> = ({ blocks, offsetX, color, endY }) => {
   const { height, fps } = useVideoConfig()
   const frame = useCurrentFrame()
 
