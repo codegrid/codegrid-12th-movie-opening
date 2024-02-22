@@ -16,6 +16,8 @@
     "@react-three/fiber": "^8.8.10",
     "@remotion/cli": "4.0.102",
     "@remotion/media-utils": "4.0.102",
+    "@remotion/noise": "^4.0.116",
+    "@remotion/shapes": "^4.0.116",
     "@remotion/three": "4.0.102",
     "@remotion/zod-types": "4.0.102",
     "react": "^18.0.0",
