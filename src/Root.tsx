@@ -1,5 +1,5 @@
 import { Composition } from "remotion"
-import { CodeGridTetris } from "./opening/CodeGridTetris"
+import { OpeningScene } from "./opening/OpeningScene"
 
 // Welcome to the Remotion Three Starter Kit!
 // Two compositions have been created, showing how to use
@@ -19,7 +19,7 @@ import { CodeGridTetris } from "./opening/CodeGridTetris"
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition id="Scene" component={CodeGridTetris} durationInFrames={120} fps={30} width={1920} height={1080} />
+      <Composition id="Scene" component={OpeningScene} durationInFrames={240} fps={30} width={1920} height={1080} />
     </>
   )
 }

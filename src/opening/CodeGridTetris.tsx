@@ -1,6 +1,5 @@
 /* eslint-disable capitalized-comments */
 import { AbsoluteFill, getRemotionEnvironment, interpolate, random, useCurrentFrame } from "remotion"
-import { CodeGridWave } from "../background/CodeGridWave"
 import { Tetrimino } from "./Tetrimino"
 import { BLOCK_SIZE, COLORS, ONE_DURATION, SCENARIO, TetriminoType } from "./tetris-settings"
 import { Fall } from "./Fall"
@@ -12,7 +11,6 @@ export const CodeGridTetris: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <CodeGridWave />
       <>
         {SCENARIO.map((scene, i) => {
           const startT = i * ONE_DURATION
