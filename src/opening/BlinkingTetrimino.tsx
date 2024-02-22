@@ -11,7 +11,7 @@ interface Props {
   color: string
 }
 
-export const TetriminoPath: React.FC<Props> = ({ blocks, offsetX, color, endY }) => {
+export const BlinkingTetrimino: React.FC<Props> = ({ blocks, offsetX, color, endY }) => {
   const { height } = useVideoConfig()
   const frame = useCurrentFrame()
 

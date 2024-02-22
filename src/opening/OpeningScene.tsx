@@ -2,7 +2,7 @@
 import { Series, AbsoluteFill } from "remotion"
 import { CodeGridWave } from "../background/CodeGridWave"
 import { CodeGridTetris } from "./CodeGridTetris"
-import { StaticCodeGridTetris } from "./StaticCodeGridTetris"
+import { BlinkingCodeGridTetris } from "./BlinkingCodeGridTetris"
 
 export const OpeningScene: React.FC = () => {
   return (
@@ -12,8 +12,8 @@ export const OpeningScene: React.FC = () => {
         <Series.Sequence durationInFrames={100}>
           <CodeGridTetris />
         </Series.Sequence>
-        <Series.Sequence durationInFrames={120}>
-          <StaticCodeGridTetris />
+        <Series.Sequence durationInFrames={30}>
+          <BlinkingCodeGridTetris />
         </Series.Sequence>
       </Series>
     </AbsoluteFill>
