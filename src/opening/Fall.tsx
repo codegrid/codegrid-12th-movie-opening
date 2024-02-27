@@ -4,6 +4,8 @@ import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, random } fr
 import { BLOCK_SIZE, ONE_DURATION } from "./tetris-settings"
 import { stepEasing } from "./easing"
 
+const STAGE_HEIGHT = BLOCK_SIZE * 3 * 2
+
 interface Props {
   tetriminoBlocksY: number
   lastTetriminoY: number
@@ -18,17 +20,17 @@ export const Fall: React.FC<Props> = ({ tetriminoBlocksY, lastTetriminoY, random
 
   // テトリミノは画面外から落ちてくる
   const topStart = useMemo(() => {
-    return -BLOCK_SIZE * tetriminoBlocksY
+    return -BLOCK_SIZE * tetriminoBlocksY - STAGE_HEIGHT
   }, [tetriminoBlocksY])
 
   // テトリミノはlastTetriminoYの位置で止まる
   const topEnd = useMemo(() => {
-    return height - BLOCK_SIZE * (lastTetriminoY + tetriminoBlocksY)
+    return height - BLOCK_SIZE * (lastTetriminoY + tetriminoBlocksY) - STAGE_HEIGHT
   }, [height, lastTetriminoY, tetriminoBlocksY])
 
   const y = interpolate(
     frame - delay,
-    [random(randomSeed) * ONE_DURATION, (random(randomSeed) + 1) * ONE_DURATION],
+    [random(randomSeed) * ONE_DURATION, random(randomSeed) * ONE_DURATION + ONE_DURATION],
     [topStart, topEnd],
     {
       easing: (t) => stepEasing(t, 4),

@@ -3,7 +3,7 @@ export const BLOCK_SIZE = 40
 // テトリミノの1辺の最長
 export const TET_SIZE = 4
 
-export const ONE_DURATION = 8
+export const ONE_DURATION = 6
 
 export const COLORS = {
   I: "#9ADCFF",

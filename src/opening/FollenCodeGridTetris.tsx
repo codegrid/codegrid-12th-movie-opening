@@ -1,8 +1,8 @@
 /* eslint-disable capitalized-comments */
-import { BlinkingTetrimino } from "./BlinkingTetrimino"
+import { FollenTetrimino } from "./FollenTetrimino"
 import { COLORS, SCENARIO, TetriminoType } from "./tetris-settings"
 
-export const BlinkingCodeGridTetris: React.FC = () => {
+export const FollenCodeGridTetris: React.FC = () => {
   return (
     <>
       {SCENARIO.map((scene) => {
@@ -11,7 +11,7 @@ export const BlinkingCodeGridTetris: React.FC = () => {
             {scene.map(({ color, list, startX, endY }) => {
               const tet = list[list.length - 1]
               return (
-                <BlinkingTetrimino
+                <FollenTetrimino
                   blocks={tet}
                   offsetX={startX}
                   endY={endY ?? 0}

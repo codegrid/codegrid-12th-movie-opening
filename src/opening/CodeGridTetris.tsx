@@ -1,12 +1,12 @@
 /* eslint-disable capitalized-comments */
-import { AbsoluteFill, getRemotionEnvironment, interpolate, random, useCurrentFrame } from "remotion"
+import { AbsoluteFill, interpolate, random, useCurrentFrame } from "remotion"
 import { Tetrimino } from "./Tetrimino"
-import { BLOCK_SIZE, COLORS, ONE_DURATION, SCENARIO, TetriminoType } from "./tetris-settings"
+import { COLORS, ONE_DURATION, SCENARIO, TetriminoType } from "./tetris-settings"
 import { Fall } from "./Fall"
 import { stepEasing } from "./easing"
+import { Accelerated } from "./Accelerated"
 
 export const CodeGridTetris: React.FC = () => {
-  const { isStudio } = getRemotionEnvironment()
   const frame = useCurrentFrame()
 
   return (
@@ -34,17 +34,17 @@ export const CodeGridTetris: React.FC = () => {
                   ]
 
                 return (
-                  <Fall
-                    key={`tetris-${i}${j}`}
-                    tetriminoBlocksY={tet.length}
-                    lastTetriminoY={endY}
-                    randomSeed={startX}
-                    delay={startT}
-                  >
-                    <Tetrimino blocks={tet} offsetX={startX} color={COLORS[color as TetriminoType]} />
-                    {/** デバッグ用 */}
-                    {isStudio && <AbsoluteFill style={{ left: startX * BLOCK_SIZE }}>{startX}</AbsoluteFill>}
-                  </Fall>
+                  <Accelerated>
+                    <Fall
+                      key={`tetris-${i}${j}`}
+                      tetriminoBlocksY={tet.length}
+                      lastTetriminoY={endY}
+                      randomSeed={startX + i}
+                      delay={startT}
+                    >
+                      <Tetrimino blocks={tet} offsetX={startX} color={COLORS[color as TetriminoType]} />
+                    </Fall>
+                  </Accelerated>
                 )
               })}
             </>

@@ -1,5 +1,5 @@
 /* eslint-disable capitalized-comments */
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion"
+import { AbsoluteFill, useVideoConfig } from "remotion"
 import { BLOCK_SIZE } from "./tetris-settings"
 import { Rect } from "@remotion/shapes"
 import { useMemo } from "react"
@@ -11,20 +11,13 @@ interface Props {
   color: string
 }
 
-export const BlinkingTetrimino: React.FC<Props> = ({ blocks, offsetX, color, endY }) => {
+export const FollenTetrimino: React.FC<Props> = ({ blocks, offsetX, color, endY }) => {
   const { height } = useVideoConfig()
-  const frame = useCurrentFrame()
 
   // テトリミノはlastTetriminoYの位置で止まる
   const topEnd = useMemo(() => {
     return height - BLOCK_SIZE * (endY + blocks.length)
   }, [height, endY, blocks.length])
-
-  // 点滅
-  const opacity = interpolate(frame, [0, 5, 10, 15, 20], [1, 0, 1, 0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp"
-  })
 
   return (
     <>
@@ -37,8 +30,7 @@ export const BlinkingTetrimino: React.FC<Props> = ({ blocks, offsetX, color, end
                 left: (x + offsetX) * BLOCK_SIZE,
                 top: topEnd + y * BLOCK_SIZE,
                 width: BLOCK_SIZE,
-                height: BLOCK_SIZE,
-                opacity
+                height: BLOCK_SIZE
               }}
             >
               <Rect width={BLOCK_SIZE} height={BLOCK_SIZE} fill={cell === 0 ? "none" : color} />
