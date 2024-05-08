@@ -2,12 +2,12 @@
 import { interpolate, useCurrentFrame } from "remotion"
 import { Series, AbsoluteFill, Audio, staticFile } from "remotion"
 import { CodeGridWave } from "./background/CodeGridWave"
+import { BaseStage } from "./base-stage/BaseStage"
+import { TranslateOnStage } from "./base-stage/TranslateOnStage"
 import { CodeGridTetris } from "./scene-1-tetris/CodeGridTetris"
 import { FollenCodeGridTetris } from "./scene-2-clear/FollenCodeGridTetris"
-import { ParticleCodeGridTetris } from "./scene-3-particle/ParticleCodeGridTetris"
-import { BaseStage } from "./base-stage/BaseStage"
 import { Blinking } from "./scene-2-clear/Blinking"
-import { TranslateOnStage } from "./base-stage/TranslateOnStage"
+import { ParticleCodeGridTetris } from "./scene-3-particle/ParticleCodeGridTetris"
 
 export const OpeningScene: React.FC = () => {
   const frame = useCurrentFrame()
