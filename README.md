@@ -1,6 +1,6 @@
 # codegrid-12th-movie
 
-CodeGrid12周年パーティー用動画を制作する[Remotion](https://remotion.dev)プロジェクト
+CodeGrid12周年パーティー用動画のオープニングを制作する[Remotion](https://remotion.dev)プロジェクト
 
 ## Commands
 

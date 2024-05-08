@@ -1,7 +1,8 @@
 {
-  "name": "codegrid-party-2024-proto",
+  "name": "codegrid-12th-movie",
   "version": "1.0.0",
-  "description": "A React Three Fiber Project",
+  "description": "CodeGrid12周年パーティー用動画のオープニングを制作するRemotionプロジェクト",
+  "private": true,
   "scripts": {
     "start": "remotion studio",
     "build": "remotion render Scene out/video-v5.mp4",
