@@ -1,13 +1,13 @@
 /* eslint-disable capitalized-comments */
 import { interpolate, useCurrentFrame } from "remotion"
 import { Series, AbsoluteFill, Audio, staticFile } from "remotion"
-import { CodeGridWave } from "../background/CodeGridWave"
-import { CodeGridTetris } from "./CodeGridTetris"
-import { FollenCodeGridTetris } from "./FollenCodeGridTetris"
-import { ParticleCodeGridTetris } from "./ParticleCodeGridTetris"
-import { BaseStage } from "./BaseStage"
-import { Blinking } from "./Blinking"
-import { TranslateOnStage } from "./TranslateOnStage"
+import { CodeGridWave } from "./background/CodeGridWave"
+import { CodeGridTetris } from "./scene-1-tetris/CodeGridTetris"
+import { FollenCodeGridTetris } from "./scene-2-clear/FollenCodeGridTetris"
+import { ParticleCodeGridTetris } from "./scene-3-particle/ParticleCodeGridTetris"
+import { BaseStage } from "./base-stage/BaseStage"
+import { Blinking } from "./scene-2-clear/Blinking"
+import { TranslateOnStage } from "./base-stage/TranslateOnStage"
 
 export const OpeningScene: React.FC = () => {
   const frame = useCurrentFrame()

@@ -1,6 +1,6 @@
 /* eslint-disable capitalized-comments */
 import { AbsoluteFill, useVideoConfig } from "remotion"
-import { BLOCK_SIZE } from "./tetris-settings"
+import { BLOCK_SIZE } from "../tetris-settings"
 import { Rect } from "@remotion/shapes"
 import { useMemo } from "react"
 

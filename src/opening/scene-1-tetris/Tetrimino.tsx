@@ -1,7 +1,7 @@
 /* eslint-disable capitalized-comments */
 import { useMemo } from "react"
 import { useVideoConfig } from "remotion"
-import { BLOCK_SIZE } from "./tetris-settings"
+import { BLOCK_SIZE } from "../tetris-settings"
 
 interface Props {
   blocks: number[][]

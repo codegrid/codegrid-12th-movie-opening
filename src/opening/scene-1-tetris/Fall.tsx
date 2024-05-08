@@ -1,8 +1,8 @@
 /* eslint-disable capitalized-comments */
 import { useMemo } from "react"
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, random } from "remotion"
-import { BLOCK_SIZE, ONE_DURATION } from "./tetris-settings"
-import { stepEasing } from "./easing"
+import { BLOCK_SIZE, ONE_DURATION } from "../tetris-settings"
+import { stepEasing } from "../easing"
 
 const STAGE_HEIGHT = BLOCK_SIZE * 3 * 2
 

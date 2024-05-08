@@ -1,6 +1,6 @@
 /* eslint-disable capitalized-comments */
 import { ParticleTetrimino } from "./ParticleTetrimino"
-import { COLORS, SCENARIO, TetriminoType } from "./tetris-settings"
+import { COLORS, SCENARIO, TetriminoType } from "../tetris-settings"
 
 export const ParticleCodeGridTetris: React.FC = () => {
   return (

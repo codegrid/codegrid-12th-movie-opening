@@ -1,6 +1,6 @@
 /* eslint-disable capitalized-comments */
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion"
-import { BLOCK_SIZE, COLORS, TetriminoType, TETROMINOS } from "./tetris-settings"
+import { BLOCK_SIZE, COLORS, TetriminoType, TETROMINOS } from "../tetris-settings"
 import { CrystalTetrimino } from "./CrystalTetrimono"
 import { RepeatX } from "./RepeatX"
 

@@ -1,6 +1,6 @@
 /* eslint-disable capitalized-comments */
 import { FollenTetrimino } from "./FollenTetrimino"
-import { COLORS, SCENARIO, TetriminoType } from "./tetris-settings"
+import { COLORS, SCENARIO, TetriminoType } from "../tetris-settings"
 
 export const FollenCodeGridTetris: React.FC = () => {
   return (

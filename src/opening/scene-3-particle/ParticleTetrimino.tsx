@@ -1,6 +1,6 @@
 /* eslint-disable capitalized-comments */
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion"
-import { BLOCK_SIZE } from "./tetris-settings"
+import { BLOCK_SIZE } from "../tetris-settings"
 import { Rect } from "@remotion/shapes"
 import { noise3D } from "@remotion/noise"
 import { useMemo } from "react"

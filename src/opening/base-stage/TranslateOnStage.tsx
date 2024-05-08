@@ -1,5 +1,5 @@
 import { AbsoluteFill } from "remotion"
-import { BLOCK_SIZE } from "./tetris-settings"
+import { BLOCK_SIZE } from "../tetris-settings"
 
 interface Props {
   children: React.ReactNode

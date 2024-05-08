@@ -1,9 +1,9 @@
 /* eslint-disable capitalized-comments */
 import { AbsoluteFill, interpolate, random, useCurrentFrame } from "remotion"
 import { Tetrimino } from "./Tetrimino"
-import { COLORS, ONE_DURATION, SCENARIO, TetriminoType } from "./tetris-settings"
+import { COLORS, ONE_DURATION, SCENARIO, TetriminoType } from "../tetris-settings"
 import { Fall } from "./Fall"
-import { stepEasing } from "./easing"
+import { stepEasing } from "../easing"
 import { Accelerated } from "./Accelerated"
 
 export const CodeGridTetris: React.FC = () => {
