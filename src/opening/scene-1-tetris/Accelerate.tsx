@@ -10,7 +10,7 @@ const remapSpeed = ({ frame, speed }: { frame: number; speed: (fr: number) => nu
   return framesPassed
 }
 
-export const Accelerated: React.FC<{
+export const Accelerate: React.FC<{
   children: React.ReactNode
 }> = ({ children }) => {
   const frame = useCurrentFrame()

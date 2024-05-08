@@ -4,7 +4,7 @@ import { Tetrimino } from "./Tetrimino"
 import { COLORS, ONE_DURATION, SCENARIO, TetriminoType } from "../tetris-settings"
 import { Fall } from "./Fall"
 import { stepEasing } from "../easing"
-import { Accelerated } from "./Accelerated"
+import { Accelerate } from "./Accelerate"
 
 export const CodeGridTetris: React.FC = () => {
   const frame = useCurrentFrame()
@@ -34,7 +34,7 @@ export const CodeGridTetris: React.FC = () => {
                   ]
 
                 return (
-                  <Accelerated>
+                  <Accelerate>
                     <Fall
                       key={`tetris-${i}${j}`}
                       tetriminoBlocksY={tet.length}
@@ -44,7 +44,7 @@ export const CodeGridTetris: React.FC = () => {
                     >
                       <Tetrimino blocks={tet} offsetX={startX} color={COLORS[color as TetriminoType]} />
                     </Fall>
-                  </Accelerated>
+                  </Accelerate>
                 )
               })}
             </>

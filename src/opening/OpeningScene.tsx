@@ -6,7 +6,7 @@ import { BaseStage } from "./base-stage/BaseStage"
 import { TranslateOnStage } from "./base-stage/TranslateOnStage"
 import { CodeGridTetris } from "./scene-1-tetris/CodeGridTetris"
 import { FollenCodeGridTetris } from "./scene-2-clear/FollenCodeGridTetris"
-import { Blinking } from "./scene-2-clear/Blinking"
+import { BlinkDown } from "./scene-2-clear/BlinkDown"
 import { ParticleCodeGridTetris } from "./scene-3-particle/ParticleCodeGridTetris"
 
 export const OpeningScene: React.FC = () => {
@@ -21,12 +21,12 @@ export const OpeningScene: React.FC = () => {
           <Audio loop src={staticFile("sound/0-fall.wav")} muted={frame < 13 || frame > 95} playbackRate={1.5} />
         </Series.Sequence>
         <Series.Sequence durationInFrames={30}>
-          <Blinking>
+          <BlinkDown>
             <TranslateOnStage>
               <FollenCodeGridTetris />
             </TranslateOnStage>
             <BaseStage appeared />
-          </Blinking>
+          </BlinkDown>
           <Audio loop src={staticFile("sound/1-splash1.wav")} toneFrequency={0.5} playbackRate={1.6} volume={0.8} />
         </Series.Sequence>
         <Series.Sequence durationInFrames={50}>

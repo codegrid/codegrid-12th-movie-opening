@@ -8,7 +8,7 @@ interface Props {
 
 const LINE_HEIGHT = BLOCK_SIZE * 3
 
-export const Blinking: React.FC<Props> = ({ children }) => {
+export const BlinkDown: React.FC<Props> = ({ children }) => {
   const frame = useCurrentFrame()
 
   // 点滅
