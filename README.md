@@ -1,4 +1,4 @@
-# codegrid-12th-movie
+# codegrid-12th-movie-opening
 
 CodeGrid12周年パーティー用動画のオープニングを制作する[Remotion](https://remotion.dev)プロジェクト
 
