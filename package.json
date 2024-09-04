@@ -13,7 +13,7 @@
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
-    "@remotion/cli": "4.0.153",
+    "@remotion/cli": "4.0.209",
     "@remotion/noise": "4.0.153",
     "@remotion/shapes": "4.0.153",
     "react": "^18.0.0",
